@@ -10,14 +10,7 @@
         android:layout_height="1dp"
         android:background="#cdcdcd" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#ededed"
-        android:gravity="center"
-        android:text="分类目录"
-        android:textColor="#BF3EFF"
-        android:textSize="17sp" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

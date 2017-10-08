@@ -50,7 +50,7 @@ public class MyAdapter extends BaseAdapter {
             mPosition = position;
             viewHolder.tv.setText(strings[position]);
             if (position == Detail_Activity.mPosition) {
-                //convertView.setBackgroundResource(R.drawable.tongcheng_all_bg01);
+                convertView.setBackgroundResource(R.drawable.act_info);
             } else {
                 convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
             }
@@ -60,7 +60,8 @@ public class MyAdapter extends BaseAdapter {
         }
         viewHolder.tv.setText(strings[position]);
         if (position == Detail_Activity.mPosition) {
-            //convertView.setBackgroundResource(R.drawable.tongcheng_all_bg01);
+//            convertView.setBackgroundResource(R.drawable.bookstore);
+            convertView.setBackgroundColor(Color.parseColor("#6699ff"));
         } else {
             convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
         }

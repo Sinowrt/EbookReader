@@ -19,7 +19,7 @@ public class ContentFragment extends Fragment {
         // TODO Auto-generated method stub
         View view = inflater.inflate(R.layout.fragment_picview, null);
         TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
-        //得到数据
+        //get data
         str = getArguments().getString(TAG);
         tv_title.setText(str);
         return view;
