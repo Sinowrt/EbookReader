@@ -10,8 +10,8 @@
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:id="@+id/ItemTitle"
-        android:textSize="30dip">
+        android:id="@+id/tv"
+        android:textSize="20dip">
     </TextView>
     <TextView
         android:layout_height="wrap_content"

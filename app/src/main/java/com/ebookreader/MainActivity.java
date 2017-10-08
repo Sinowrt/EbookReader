@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void OpenNew(){
         //第一个参数为当前Activity类对象，第二个参数为要打开的Activity类
-        Intent intent =new Intent(MainActivity.this,video_player_Activity.class);
+        Intent intent =new Intent(MainActivity.this,Detail_Activity.class);
         startActivity(intent);
     }
 

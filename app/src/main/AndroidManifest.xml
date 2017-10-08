@@ -30,7 +30,7 @@
             android:name=".dialog_test_Activity">
         </activity>
         <activity
-            android:name=".tab_list_test_Activity">
+            android:name=".Detail_Activity">
         </activity>
         <activity
             android:name=".video_player_Activity">
