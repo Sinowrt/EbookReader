@@ -1,14 +1,21 @@
 package com.ebookreader;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.content.Intent;
+
+import java.util.List;
 
 /**
  * Created by Mr. cai on 2017/9/29.
@@ -68,9 +75,9 @@ public class Detail_Activity extends FragmentActivity implements AdapterView.OnI
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, myFragment);
         //通过bundle传值给MyFragment
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         bundle.putString(ContentFragment.TAG, strs[mPosition]);
-        myFragment.setArguments(bundle);
+        myFragment.setArguments(bundle);*/
         fragmentTransaction.commit();
     }
 
@@ -85,9 +92,9 @@ public class Detail_Activity extends FragmentActivity implements AdapterView.OnI
             myFragment = new ContentFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, myFragment);
-            Bundle bundle = new Bundle();
+            /*Bundle bundle = new Bundle();
             bundle.putString(ContentFragment.TAG, strs[position]);
-            myFragment.setArguments(bundle);
+            myFragment.setArguments(bundle);*/
             fragmentTransaction.commit();
         }
     }
@@ -117,3 +124,4 @@ public class Detail_Activity extends FragmentActivity implements AdapterView.OnI
         }
     }
 }
+

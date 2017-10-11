@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         //新建适配器
         String [] from ={"image","text"};
         int [] to = {R.id.image,R.id.text};
-        sim_adapter = new SimpleAdapter(this, data_list, R.layout.item, from, to);
+        sim_adapter = new SimpleAdapter(this, data_list, R.layout.main_item, from, to);
         //配置适配器
         gview.setAdapter(sim_adapter);
 
