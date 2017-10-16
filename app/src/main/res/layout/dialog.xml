@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <Button
-    android:id="@+id/normalBtn"
+    android:id="@+id/nomalBtn"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="普通对话框"/>

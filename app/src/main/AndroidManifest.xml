@@ -27,9 +27,6 @@
             android:name=".LoginActivity">
         </activity>
         <activity
-            android:name=".dialog_test_Activity">
-        </activity>
-        <activity
             android:name=".Detail_Activity">
         </activity>
         <activity

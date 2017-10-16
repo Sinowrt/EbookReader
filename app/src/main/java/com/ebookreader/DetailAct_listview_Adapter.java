@@ -12,13 +12,13 @@ import android.widget.TextView;
  * Created by Jacky on 2017/10/8.
  */
 
-public class MyAdapter extends BaseAdapter {
+public class DetailAct_listview_Adapter extends BaseAdapter {
 
     private Context context;
     private String[] strings;
     public static int mPosition;
 
-    public MyAdapter(Context context, String[] strings){
+    public DetailAct_listview_Adapter(Context context, String[] strings){
         this.context =context;
         this.strings = strings;
     }

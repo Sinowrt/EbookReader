@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,13 +27,22 @@ public class MainActivity extends AppCompatActivity {
     private List<Map<String, Object>> data_list;
     private SimpleAdapter sim_adapter;
     private int[] icon = {
-            R.drawable.act_info, R.drawable.bookstore,
-            R.drawable.know, R.drawable.prisonin,
-            R.drawable.prisonout, R.drawable.readmin,
-            R.drawable.socia, R.drawable.specialedu,
-            R.drawable.tech, R.drawable.think
+            R.drawable.readmin,  R.drawable.lecture,    R.drawable.prisonin,
+            R.drawable.think,    R.drawable.know,       R.drawable.tech,
+            R.drawable.prisonout,R.drawable.specialedu, R.drawable.bookstore,
+            R.drawable.socia,    R.drawable.act_info,   R.drawable.alam,
+            R.drawable.women,    R.drawable.teen,       R.drawable.note
+
     };
-    private String[] iconName = { "活动通知", "凤凰书市", "学历教育", "入监教育", "出监教育", "每日诵读", "社会帮教", "专题教育", "技术教育", "思想教育" };
+    private String[] iconName = {
+            "每日诵读","凤凰讲座","入监教育",
+            "思想教育","学历教育", "技术教育",
+            "出监教育","专题教育","凤凰书市",
+            "社会帮教","活动通知","学习提醒",
+            "女性专区","青少年专区","学习笔记"};
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //LoginActivity login=new LoginActivity();
@@ -80,6 +94,39 @@ public class MainActivity extends AppCompatActivity {
         return data_list;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.start:{
+                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("此操作将会退出登录，确认退出吗？").setTitle("提示");
+
+                builder.setPositiveButton("确认",new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog,int which){
+                        dialog.dismiss();
+                        MainActivity.this.finish();
+                    }
+                });
+
+                builder.setNegativeButton("取消",new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog,int which){
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.create().show();
+                break;}
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }
