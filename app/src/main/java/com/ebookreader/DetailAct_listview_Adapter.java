@@ -50,7 +50,7 @@ public class DetailAct_listview_Adapter extends BaseAdapter {
             mPosition = position;
             viewHolder.tv.setText(strings[position]);
             if (position == Detail_Activity.mPosition) {
-                convertView.setBackgroundResource(R.drawable.act_info);
+                convertView.setBackgroundResource(R.drawable.activity_info);
             } else {
                 convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
             }

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
     private List<Map<String, Object>> data_list;
     private SimpleAdapter sim_adapter;
     private int[] icon = {
-            R.drawable.readmin,  R.drawable.lecture,    R.drawable.prisonin,
-            R.drawable.think,    R.drawable.know,       R.drawable.tech,
+            R.drawable.perday_reading,  R.drawable.phoenix_lecture,    R.drawable.prisonin,
+            R.drawable.ideological_edu,    R.drawable.education,       R.drawable.technology,
             R.drawable.prisonout,R.drawable.specialedu, R.drawable.bookstore,
-            R.drawable.socia,    R.drawable.act_info,   R.drawable.alam,
-            R.drawable.women,    R.drawable.teen,       R.drawable.note
+            R.drawable.social_help,    R.drawable.activity_info,   R.drawable.learning_alam,
+            R.drawable.women,    R.drawable.teen,       R.drawable.learning_note
 
     };
     private String[] iconName = {
@@ -126,6 +127,34 @@ public class MainActivity extends AppCompatActivity {
                 break;}
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode==KeyEvent.KEYCODE_BACK&&event.getRepeatCount()==0){
+            AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("此操作将会退出登录，确认退出吗？").setTitle("提示");
+
+            builder.setPositiveButton("确认",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog,int which){
+                    dialog.dismiss();
+                    MainActivity.this.finish();
+                }
+            });
+
+            builder.setNegativeButton("取消",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog,int which){
+                    dialog.dismiss();
+                }
+            });
+
+            builder.create().show();
+            return true;
+        }
+        else
+            return super.onKeyDown(keyCode,event);
     }
 
 

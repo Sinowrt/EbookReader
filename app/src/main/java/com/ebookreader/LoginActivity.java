@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    public boolean Islogin=false;
+    public boolean islogin=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public boolean check_Islogin(){
-        return Islogin;
+        return islogin;
     }
 
     private void populateAutoComplete() {
