@@ -29,18 +29,18 @@ public class MainActivity extends AppCompatActivity {
     private SimpleAdapter sim_adapter;
     private int[] icon = {
             R.drawable.perday_reading,  R.drawable.phoenix_lecture,    R.drawable.prisonin,
-            R.drawable.ideological_edu,    R.drawable.education,       R.drawable.technology,
-            R.drawable.prisonout,R.drawable.specialedu, R.drawable.bookstore,
-            R.drawable.social_help,    R.drawable.activity_info,   R.drawable.learning_alam,
-            R.drawable.women,    R.drawable.teen,       R.drawable.learning_note
+            R.drawable.ideological_edu, R.drawable.education,          R.drawable.technology,
+            R.drawable.prisonout,       R.drawable.specialedu,         R.drawable.bookstore,
+            R.drawable.social_help,     R.drawable.activity_info,      R.drawable.learning_alam,
+            R.drawable.myphoenix,       R.drawable.game,               R.drawable.learning_note
 
     };
     private String[] iconName = {
             "每日诵读","凤凰讲座","入监教育",
-            "思想教育","学历教育", "技术教育",
+            "思想教育","学历教育","技术教育",
             "出监教育","专题教育","凤凰书市",
             "社会帮教","活动通知","学习提醒",
-            "女性专区","青少年专区","学习笔记"};
+            "我的凤凰","益智游戏","学习日记"};
 
 
 

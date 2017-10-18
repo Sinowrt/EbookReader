@@ -23,7 +23,7 @@ public class SplashActivity extends Activity {
         // 设置加载动画透明度渐变从（0.1不显示-1.0完全显示）
         AlphaAnimation animation = new AlphaAnimation(-0.1f, 1.0f);
         // 设置动画时间5s
-        animation.setDuration(5000);
+        animation.setDuration(3000);
         // 将组件与动画关联
         imageView.setAnimation(animation);
 
@@ -54,6 +54,5 @@ public class SplashActivity extends Activity {
 
     protected void init() {
         // TODO 自动生成的方法存根
-        //Tools.checkNetwork(SplashActivity.this);
     }
 }

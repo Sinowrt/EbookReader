@@ -27,19 +27,19 @@ public class Detail_Activity extends FragmentActivity implements AdapterView.OnI
     private static final String[] VIDEO_PROJECT = {MediaStore.Video.Media._ID,   MediaStore.Video.Media.DATA, MediaStore.Video.Media.TITLE};
 
     /*二级listview textview填充*/
-    private String[] tag_0 = {"修心课内容"};
+    private String[] tag_0 = {"服刑人员行为规范","国学经典语录","励志经典语录","修心养身语录"};
     private String[] tag_1 = {};
-    private String[] tag_2 = {"广东省监狱罪犯服刑指南", "监规纪律", "心理测试", "测验评估"};
+    private String[] tag_2 = {"认识监狱", "认罪服法", "监规纪律","教育改造","健康服刑","奖罚考核","常见问题问答", "测验评估"};
     private String[] tag_3 = {"认罪悔罪", "法律常识", "公民道德", "劳动常识", "时事政治", "测验评估"};
-    private String[] tag_4 = {"小学", "初中", "高中", "函授电大", "测验评估"};
-    private String[] tag_5 = {"保健按摩师", "电器维修技术", "种养殖技术", "文案写作", "办公室软件应用", "测验评估"};
-    private String[] tag_6 = {"出监教育", "出监教育大纲", "就业创业指导", "测验评估"};
-    private String[] tag_7 = {"心理健康", "文艺教育", "测验评估"};
-    private String[] tag_8 = {"畅销榜单", "重磅推荐", "经典名著", "名家散文", "知识技能", "国学经典", "社科文学", "青春文学", "套装图书", "健康保健", "书法绘画", "军事小说", "历史人物", "学习字典", "精装图书", "成功励志", "心灵鸡汤"};
-    private String[] tag_9 = {"社会赠书", "公益讲座", "劳务招聘"};
+    private String[] tag_4 = {"扫盲","小学", "初中", "高中", "函授电大", "测验评估"};
+    private String[] tag_5 = {"车工技术","保健按摩师", "足部按摩师", "服装设计定制工", "文案写作", "测验评估"};
+    private String[] tag_6 = {"回归准备", "心理调适", "身份恢复", "亲情连线","社区融入","形式政策","就业指导","创业指导","测验评估"};
+    private String[] tag_7 = {"爱国主义", "感恩教育", "心理健康","艺术教育","成功故事"};
+    private String[] tag_8 = {"重点推荐","畅销新书","精装图书","科幻小说","历史传记", "青春文学","人文社科","法律知识","心理健康","职业技能","养殖技术","休闲娱乐","保健养生","书法绘画","学习字典"};
+    private String[] tag_9 = {"社会赠书", "劳务招聘（应聘意向登记表）","技能培训","帮教问答","公益求助","求职荐工"};
     private String[] tag_10 = {"优惠活动", "文体活动", "监狱通知"};
     private String[] tag_11 = {};
-    private String[] tag_12 = {};
+    private String[] tag_12 = {"个人信息","余额查询","学习积分","购物记录"};
     private String[] tag_13 = {};
     private String[] tag_14 = {};
 

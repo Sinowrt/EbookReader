@@ -3,6 +3,7 @@ package com.ebookreader;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -90,6 +91,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        Button registerButton=(Button) findViewById(R.id.email_register_button) ;
+        registerButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_toRegister = new Intent();
+                intent_toRegister.setClass(LoginActivity.this,registerActivity.class);
+                startActivity(intent_toRegister);
             }
         });
 

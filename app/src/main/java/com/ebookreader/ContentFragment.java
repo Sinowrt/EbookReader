@@ -75,7 +75,7 @@ public class ContentFragment extends Fragment {
 
                 // goto video_player_Activity
                 Intent intent = new Intent(getActivity(),
-                        video_player_Activity.class);
+                        LoginActivity.class);
                 //intent.putExtra("productId", position);
 
                 startActivity(intent);

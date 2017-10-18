@@ -36,6 +36,9 @@
         <activity
             android:name=".video_player_Activity">
         </activity>
+        <activity
+            android:name=".registerActivity">
+        </activity>
     </application>
 
 </manifest>
