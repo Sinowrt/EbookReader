@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class register_spiadapter extends ArrayAdapter<String> {
+public class regActivity_Spinner_Adapter extends ArrayAdapter<String> {
     private Context mContext;
     private String [] mStringArray;
-    public register_spiadapter(Context context, String[] stringArray) {
+    public regActivity_Spinner_Adapter(Context context, String[] stringArray) {
         super(context, android.R.layout.simple_spinner_dropdown_item, stringArray);
         mContext = context;
         mStringArray=stringArray;

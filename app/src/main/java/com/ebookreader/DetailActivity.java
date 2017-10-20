@@ -16,7 +16,7 @@ import android.content.Intent;
  * 二级目录listview以及gridview视图控制
  */
 
-public class Detail_Activity extends FragmentActivity implements AdapterView.OnItemClickListener {
+public class DetailActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
     /*ListView填充用*/
 
     public static int first_param = 0;

@@ -49,8 +49,6 @@
             />
     </LinearLayout>
 
-
-
     <android.support.design.widget.TextInputLayout
         android:layout_width="600dp"
         android:layout_height="wrap_content"
@@ -64,10 +62,6 @@
             android:inputType="text"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
-
-
-
-
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="600dp"
@@ -95,8 +89,13 @@
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
     <android.support.design.widget.TextInputLayout
-        android:layout_width="600dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         >
         <AutoCompleteTextView
@@ -107,4 +106,86 @@
             android:inputType="text"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/edu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="文化程度"
+            android:inputType="text"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/job"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="曾从事的职业"
+            android:inputType="text"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/hobbit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="兴趣爱好"
+            android:inputType="text"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/reading_hobbit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="阅读爱好"
+            android:inputType="text"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/rest_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="余刑"
+            android:inputType="text"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>
+    <Button
+        android:id="@+id/regButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="提交注册"
+        android:gravity="center"/>
 </LinearLayout>

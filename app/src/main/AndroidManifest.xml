@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Detail_Activity">
+            android:name=".DetailActivity">
         </activity>
         <activity
             android:name=".video_player_Activity">

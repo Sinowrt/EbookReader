@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void intent_GoToDetailActivity(int pos) {
         Intent intent_toDetail = new Intent();
-        intent_toDetail.setClass(this,Detail_Activity.class);
+        intent_toDetail.setClass(this,DetailActivity.class);
         intent_toDetail.putExtra("first", pos);
         startActivity(intent_toDetail);
     }

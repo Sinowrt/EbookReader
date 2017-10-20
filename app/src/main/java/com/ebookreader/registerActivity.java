@@ -3,12 +3,10 @@ package com.ebookreader;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
-
-import java.lang.reflect.Array;
-
-import static com.ebookreader.R.id.parent;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -17,16 +15,22 @@ import static com.ebookreader.R.id.parent;
  */
 
 public class registerActivity extends Activity {
+    int mYear, mMonth, mDay;
+    Button btn;
+    TextView dateDisplay;
+    final int DATE_DIALOG = 1;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
+
     }
     private void init(){
         Spinner mSpinner=(Spinner) findViewById(R.id.spinner);
         String[] mStringArray=getResources().getStringArray(R.array.sex);
         //使用自定义的ArrayAdapter
-        register_spiadapter mAdapter = new register_spiadapter(registerActivity.this,mStringArray);
+        regActivity_Spinner_Adapter mAdapter = new regActivity_Spinner_Adapter(registerActivity.this,mStringArray);
 
 
         //设置下拉列表风格(这句不些也行)
@@ -34,6 +38,17 @@ public class registerActivity extends Activity {
         mSpinner.setAdapter(mAdapter);
         //监听Item选中事件
         //mSpinner.setOnItemSelectedListener(new ItemSelectedListenerImpl());
+        Button regButton = (Button) findViewById(R.id.regButton);
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(registerActivity.this,"提交成功", Toast.LENGTH_SHORT ).show();
+
+                finish();
+            }
+        });
+
+
 
     }
 

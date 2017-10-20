@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    public boolean islogin=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,9 +108,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    public boolean check_Islogin(){
-        return islogin;
-    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -351,6 +348,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                Intent intent_toDetail = new Intent();
+                intent_toDetail.setClass(LoginActivity.this,MainActivity.class);
+                startActivity(intent_toDetail);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

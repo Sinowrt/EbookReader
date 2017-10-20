@@ -49,7 +49,7 @@ public class DetailAct_listview_Adapter extends BaseAdapter {
             viewHolder.tv=(TextView) convertView.findViewById(R.id.tv);
             mPosition = position;
             viewHolder.tv.setText(strings[position]);
-            if (position == Detail_Activity.mPosition) {
+            if (position == DetailActivity.mPosition) {
                 convertView.setBackgroundResource(R.drawable.activity_info);
             } else {
                 convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
@@ -59,7 +59,7 @@ public class DetailAct_listview_Adapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.tv.setText(strings[position]);
-        if (position == Detail_Activity.mPosition) {
+        if (position == DetailActivity.mPosition) {
 //            convertView.setBackgroundResource(R.drawable.bookstore);
             convertView.setBackgroundColor(Color.parseColor("#6699ff"));
         } else {
