@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         //新建适配器
         String [] from ={"image","text"};
         int [] to = {R.id.image,R.id.text};
-        sim_adapter = new SimpleAdapter(this, data_list, R.layout.main_item, from, to);
+        sim_adapter = new SimpleAdapter(this, data_list, R.layout.main_gview_item, from, to);
         //配置适配器
         gview.setAdapter(sim_adapter);
 
@@ -83,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent_toDetail);
     }
 
-    public List<Map<String, Object>> getData(){
-
+    public List<Map<String, Object>> getData() {
         for(int i=0;i<icon.length;i++){
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("image", icon[i]);

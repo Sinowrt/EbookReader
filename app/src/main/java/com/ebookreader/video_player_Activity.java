@@ -2,6 +2,7 @@ package com.ebookreader;
 
 import java.io.File;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,17 +16,23 @@ public class video_player_Activity extends Activity {
 
     private VideoView video1;
     MediaController  mediaco;
+    private String url=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.video);
+        acceptIntent();
+        //url=url+"/11.mp4";
+        //System.out.println(url);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //setContentView(R.layout.video);
         video1=(VideoView)findViewById(R.id.video1);
         mediaco=new MediaController(this);
-        File file=new File("/storage/emulated/0/Pictures/Screenshots/11.mp4");
+
+        File file=new File(url);
         if(file.exists()){
             //VideoView与MediaController进行关联
             video1.setVideoPath(file.getAbsolutePath());
@@ -37,6 +44,10 @@ public class video_player_Activity extends Activity {
 
     }
 
+    public void acceptIntent() {
+        Intent intent_accept = getIntent();
+        url = intent_accept.getStringExtra("url");
+    }
    // @Override
    // public boolean onCreateOptionsMenu(Menu menu) {
    //     getMenuInflater().inflate(R.menu.main, menu);

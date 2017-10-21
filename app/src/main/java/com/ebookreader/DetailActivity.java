@@ -3,6 +3,7 @@ package com.ebookreader;
 
 import android.os.Bundle;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.content.Intent;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mr. cai on 2017/9/29.
@@ -20,8 +25,10 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
     /*ListView填充用*/
 
     public static int first_param = 0;
+    private static int second_param=0;
 
     public String[] strs = null;
+
 
 
     private static final String[] VIDEO_PROJECT = {MediaStore.Video.Media._ID,   MediaStore.Video.Media.DATA, MediaStore.Video.Media.TITLE};
@@ -44,7 +51,7 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
     private String[] tag_14 = {};
 
     private ListView listView;
-    private DetailAct_listview_Adapter adapter;
+    private DetailAct_listview_Adapter adapter;   //listview adapter
     private ContentFragment myFragment;
     /*选中的item的位数号码*/
     public static int mPosition;
@@ -68,7 +75,6 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
         listView.setAdapter(adapter);
         //监听事件
         listView.setOnItemClickListener(this);
-
         //创建MyFragment对象
         myFragment = new ContentFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
@@ -76,7 +82,8 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
         fragmentTransaction.replace(R.id.fragment_container, myFragment);
         //通过bundle传值给MyFragment
         Bundle bundle = new Bundle();
-        bundle.putInt("first_type", first_param);    //来自一级目录的类目参数
+        bundle.putInt("first_type", first_param);    //传递来自一级目录的类目参数
+        bundle.putInt("second_type",second_param);   //传递来自二级目录listview参数
         myFragment.setArguments(bundle);
         fragmentTransaction.commit();
     }
@@ -88,17 +95,17 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
         mPosition = position;
         //即使刷新adapter
         adapter.notifyDataSetChanged();
-//for        for (int i = 0; i < strs.length; i++) {
+        for (int i = 0; i < strs.length; i++) {
             myFragment = new ContentFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, myFragment);
             //通过bundle传值给MyFragment
             Bundle bundle = new Bundle();
             bundle.putInt("first_type",first_param);
-            bundle.putInt("second_index",position);
+            bundle.putInt("second_type",position);
             myFragment.setArguments(bundle);
             fragmentTransaction.commit();
-//for        }
+        }
     }
 
     /*创建接收MainActivity参数意图*/
@@ -111,7 +118,6 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
     }
 
     /*二级目录字符串装载strs*/
-
     private void get_Strindex() {
         switch (first_param) {
             case 0:
@@ -165,26 +171,8 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
         }
     }
 
-    /*public void video_getrespath() {
 
-        String selection = MediaStore.Video.Media.DATA + " like ?";
-        Cursor cursor = getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, VIDEO_PROJECT, selection, new String[]{"/storage/emulated/0/DCIM/Camera/Vc" + "%"}, MediaStore.MediaColumns.DATE_MODIFIED + " DESC");
-        if (cursor != null) {
-            int idindex = cursor.getColumnIndex(BaseColumns._ID);
-            int modifiedindex = cursor.getColumnIndex(MediaStore.Video.Media.DATA);
-            int durationindex = cursor.getColumnIndex(MediaStore.Video.Media.TITLE);
-            while (cursor.moveToNext()) {
-                VideoInfo info = new VideoInfo();
-                info.setId(cursor.getInt(idindex));
-                info.setPath(cursor.getString(dataindex));
-                info.setDateModified(cursor.getLong(modifiedindex));
-                info.setDateTaken(cursor.getLong(takenindex));
-                info.setDuration(cursor.getInt(durationindex));
-                mVideoInfos.add(info);
-                Log.d("videoinfo", info.toString());
-            }
-        }
-    }*/
+
 
 
 }
