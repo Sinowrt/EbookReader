@@ -104,8 +104,13 @@ public class LocalFileAdapter extends BaseAdapter {
             vh = (ViewH) convertView.getTag();
         }
         File curFile = files.get(position);
-        final String fileName = files.get(position).getName();
-        vh.list_file_name.setText(fileName);
+        String fileName = files.get(position).getName();
+
+        String[] names = fileName.split("\\.");
+
+        String fileOtherName=names[0];     //得到不带后缀的文件名
+
+        vh.list_file_name.setText(fileOtherName);
 
             vh.list_file_imag.setImageResource(R.drawable.filetype_doc);
 

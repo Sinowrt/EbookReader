@@ -44,7 +44,7 @@ public class SplashActivity extends Activity {
 
             // 动画结束时执行
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
             }

@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     };
     private String[] iconName = {
             "每日诵读","凤凰讲座","入监教育",
-            "思想教育","学历教育","技术教育",
+            "思想教育","文化教育","技术教育",
             "出监教育","专题教育","凤凰书市",
             "社会帮教","活动通知","学习提醒",
             "我的凤凰","益智游戏","学习日记"};
