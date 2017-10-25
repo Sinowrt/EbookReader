@@ -43,6 +43,7 @@ public class LocalFileAdapter extends BaseAdapter {
     private List<String> checkeds;
     private Bitmap mLoadingBitmap;
     private Bitmap mVideoBitmap;
+    private Bitmap mImageBitmap;
     public static  int count;
 
     private ContentResolver contentResolver;
@@ -52,6 +53,7 @@ public class LocalFileAdapter extends BaseAdapter {
         this.context = cont;
         this.files = f;
 
+        mImageBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_image);
         mLoadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_doc);
         mVideoBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_video);
 
@@ -72,7 +74,7 @@ public class LocalFileAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        System.out.println("+++++++++++++++++++getCount num："+count+++"                       return num:"+files.size());
+        //System.out.println("+++++++++++++++++++getCount num："+count+++"                       return num:"+files.size());
         return files.size();
     }
 
@@ -88,7 +90,7 @@ public class LocalFileAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        System.out.println("xcqw getView  1***position: "+position);
+        //System.out.println("xcqw getView  1***position: "+position);
         ViewH vh = null;
         if (convertView == null) {
             vh = new ViewH();
@@ -101,6 +103,7 @@ public class LocalFileAdapter extends BaseAdapter {
             vh = (ViewH) convertView.getTag();
         }
         File curFile = files.get(position);
+
         String fileName = files.get(position).getName();
 
         String[] names = fileName.split("\\.");
@@ -112,7 +115,8 @@ public class LocalFileAdapter extends BaseAdapter {
             vh.list_file_imag.setImageResource(R.drawable.filetype_doc);
 
 
-            if (getFileType(curFile.getName()) != 0) {//判断是否是图片或者是视屏
+            if (getFileType(curFile.getName()) != 0) {
+                //判断是否是图片或者是视屏
                 //System.out.println("if "+curFile.getAbsolutePath());
 
                 BitmapDrawable drawable = getBitmapFromMemoryCache(curFile.getAbsolutePath());//先查看缓存是否有
@@ -127,8 +131,32 @@ public class LocalFileAdapter extends BaseAdapter {
                     vh.list_file_imag.setImageDrawable(asyncDrawable);
                     task.execute(curFile.getAbsolutePath());
                 }
+            }else{
+                if(curFile.isDirectory()) {
+                    String coverUrl=findCoverimage(curFile);
+                    BitmapDrawable drawable = getBitmapFromMemoryCache(coverUrl);//先查看缓存是否有
+
+                    if (drawable != null) {
+
+                        vh.list_file_imag.setImageDrawable(drawable);
+                    } else if (cancelPotentialWork(curFile.getAbsolutePath(), vh.list_file_imag)) {//没有就异步缓存
+
+                        BitmapWorkerTask task = new BitmapWorkerTask(vh.list_file_imag);
+                        AsyncDrawable asyncDrawable = new AsyncDrawable(context.getResources(), mLoadingBitmap, task);
+                        vh.list_file_imag.setImageDrawable(asyncDrawable);
+                        task.execute(coverUrl);
+                    }
+                }
             }
         return convertView;
+    }
+
+    private String findCoverimage(File directory){
+        File[] files=directory.listFiles();
+        for(File file :files){
+            if(file.getName().contains("cover")) return file.getAbsolutePath();
+        }
+        return directory.getAbsolutePath();
     }
 
     public static class ViewH {
@@ -213,10 +241,17 @@ public class LocalFileAdapter extends BaseAdapter {
             // 在后台开始下载图片
             Bitmap bitmap = null;
 
-                bitmap=getVideoThumbnail(imageUrl);
+            if (getFileType(imageUrl) == 2) {
+                bitmap = getImageThumbnail(imageUrl);
+                if (bitmap == null) {
+                    bitmap = mImageBitmap;
+                }
+            } else {
+                bitmap = getVideoThumbnail(imageUrl);
                 if (bitmap == null) {
                     bitmap = mVideoBitmap;
                 }
+            }
 
 
             BitmapDrawable drawable = new BitmapDrawable(context.getResources(), bitmap);

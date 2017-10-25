@@ -93,13 +93,24 @@ public class ContentFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                String fileUrl=mfiles.get(position).getAbsolutePath();
-                Intent intent = new Intent(getActivity(),
-                        video_player_Activity.class);
-                intent.putExtra("url", fileUrl);
-                startActivity(intent);
+
+
+                startActivity(intent_create(position));
             }
         });
+    }
+
+    private Intent intent_create(int position){
+        Intent intent;
+        String fileUrl=mfiles.get(position).getAbsolutePath();
+        if(first_para==0&&second_para!=0){
+            intent = new Intent(getActivity(), ReadingActivity.class);}
+
+        else{
+            intent = new Intent(getActivity(), video_player_Activity.class);
+        }
+            intent.putExtra("url", fileUrl);
+            return intent;
     }
 
     private void checkEnvironment() {
