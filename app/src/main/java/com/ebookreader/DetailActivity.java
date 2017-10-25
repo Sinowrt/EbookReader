@@ -76,6 +76,7 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
         //监听事件
         listView.setOnItemClickListener(this);
         //创建MyFragment对象
+
         myFragment = new ContentFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -85,7 +86,9 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
         bundle.putInt("first_type", first_param);    //传递来自一级目录的类目参数
         bundle.putInt("second_type",second_param);   //传递来自二级目录listview参数
         myFragment.setArguments(bundle);
+
         fragmentTransaction.commit();
+
     }
 
     @Override
@@ -95,7 +98,7 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
         mPosition = position;
         //即使刷新adapter
         adapter.notifyDataSetChanged();
-        for (int i = 0; i < strs.length; i++) {
+
             myFragment = new ContentFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, myFragment);
@@ -105,7 +108,7 @@ public class DetailActivity extends FragmentActivity implements AdapterView.OnIt
             bundle.putInt("second_type",position);
             myFragment.setArguments(bundle);
             fragmentTransaction.commit();
-        }
+
     }
 
     /*创建接收MainActivity参数意图*/

@@ -65,6 +65,7 @@ public class DetailAct_listview_Adapter extends BaseAdapter {
         } else {
             convertView.setBackgroundColor(Color.parseColor("#f4f4f4"));
         }
+
         return convertView;
     }
 

@@ -43,10 +43,12 @@ public class LocalFileAdapter extends BaseAdapter {
     private List<String> checkeds;
     private Bitmap mLoadingBitmap;
     private Bitmap mVideoBitmap;
+    public static  int count;
 
     private ContentResolver contentResolver;
 
     public LocalFileAdapter(Context cont, List<File> f) {
+        this.count=0;
         this.context = cont;
         this.files = f;
 
@@ -59,24 +61,18 @@ public class LocalFileAdapter extends BaseAdapter {
         // 获取应用程序最大可用内存
         int maxMemory = (int) Runtime.getRuntime().maxMemory();
         int cacheSize = maxMemory / 8;
+        if(mMemoryCache==null){
         mMemoryCache = new LruCache<String, BitmapDrawable>(cacheSize) {
             @Override
             protected int sizeOf(String key, BitmapDrawable drawable) {
                 return drawable.getBitmap().getByteCount();
             }
-        };
-    }
-
-    public boolean isChecked() {
-        return !checkeds.isEmpty();
-    }
-
-    public void clearSelectStatus() {
-        checkeds.clear();
+        };}
     }
 
     @Override
     public int getCount() {
+        System.out.println("+++++++++++++++++++getCount num："+count+++"                       return num:"+files.size());
         return files.size();
     }
 
@@ -92,6 +88,7 @@ public class LocalFileAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        System.out.println("xcqw getView  1***position: "+position);
         ViewH vh = null;
         if (convertView == null) {
             vh = new ViewH();
@@ -116,10 +113,15 @@ public class LocalFileAdapter extends BaseAdapter {
 
 
             if (getFileType(curFile.getName()) != 0) {//判断是否是图片或者是视屏
+                //System.out.println("if "+curFile.getAbsolutePath());
+
                 BitmapDrawable drawable = getBitmapFromMemoryCache(curFile.getAbsolutePath());//先查看缓存是否有
+
                 if (drawable != null) {
+
                     vh.list_file_imag.setImageDrawable(drawable);
                 } else if (cancelPotentialWork(curFile.getAbsolutePath(), vh.list_file_imag)) {//没有就异步缓存
+
                     BitmapWorkerTask task = new BitmapWorkerTask(vh.list_file_imag);
                     AsyncDrawable asyncDrawable = new AsyncDrawable(context.getResources(), mLoadingBitmap, task);
                     vh.list_file_imag.setImageDrawable(asyncDrawable);
@@ -149,16 +151,51 @@ public class LocalFileAdapter extends BaseAdapter {
         return bitmap;
     }
 
+    /**
+     * 图片缩略图获取
+     *
+     * @param myPath
+     * @return
+     */
+    public Bitmap getImageThumbnail(String myPath) {
+        String[] projection = { MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID, };
+        String whereClause = MediaStore.Images.Media.DATA + "='" + myPath + "'";
+        Cursor cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, whereClause,
+                null, null);
+        int _id = 0;
+        String imagePath = "";
+        if (cursor == null || cursor.getCount() == 0) {
+            return null;
+        }
+        int id = 0;
+        if (cursor.moveToFirst()) {
+
+            int _idColumn = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+            int _dataColumn = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+
+            _id = cursor.getInt(_idColumn);
+            imagePath = cursor.getString(_dataColumn);
+            if (imagePath.equals(myPath)) {
+                id = _id;
+            }
+        }
+        cursor.close();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inDither = false;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        Bitmap bitmap = MediaStore.Images.Thumbnails.getThumbnail(contentResolver, id, Images.Thumbnails.MINI_KIND,
+                options);
+        return bitmap;
+    }
+
 
     /**
      * 图片缓存技术的核心类，用于缓存所有下载好的图片，在程序内存达到设定值时会将最少最近使用的图片移除掉。
      */
-    private LruCache<String, BitmapDrawable> mMemoryCache;
+    private static LruCache<String, BitmapDrawable> mMemoryCache;
 
     /**
      * 异步下载图片的任务。
-     *
-     * @author guolin
      */
     class BitmapWorkerTask extends AsyncTask<String, Void, BitmapDrawable> {
 
@@ -184,6 +221,7 @@ public class LocalFileAdapter extends BaseAdapter {
 
             BitmapDrawable drawable = new BitmapDrawable(context.getResources(), bitmap);
             addBitmapToMemoryCache(imageUrl, drawable);
+
             return drawable;
         }
 
@@ -267,7 +305,10 @@ public class LocalFileAdapter extends BaseAdapter {
      */
     public void addBitmapToMemoryCache(String key, BitmapDrawable drawable) {
         if (getBitmapFromMemoryCache(key) == null) {
+            System.out.println(mMemoryCache.size());
+
             mMemoryCache.put(key, drawable);
+
         }
     }
 

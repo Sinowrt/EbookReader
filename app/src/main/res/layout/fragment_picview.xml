@@ -13,10 +13,10 @@
 
     <GridView
         android:id="@+id/picview_gridview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
-        android:columnWidth="100dp"
+        android:columnWidth="150dp"
         android:horizontalSpacing="20dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"

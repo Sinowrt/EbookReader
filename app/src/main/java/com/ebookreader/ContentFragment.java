@@ -12,6 +12,7 @@ import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 
+import android.support.v7.widget.FitWindowsViewGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,6 @@ import java.util.List;
 public class ContentFragment extends Fragment {
     private View rootView;
 
-    private List<Integer> res_preview;
     private GridView Contentgview;
 
 
@@ -52,16 +52,19 @@ public class ContentFragment extends Fragment {
         checkEnvironment();
         pathComplete();
         previewAdd();
-        System.out.println("123");
+
+
         if (null == rootView) {
             rootView = inflater.inflate(R.layout.fragment_picview, container,
                     false);
             initView(rootView);
         }
         ViewGroup parent = (ViewGroup) rootView.getParent();
+
         if (null != parent) {
             parent.removeView(rootView);
         }
+
         return rootView;
 
     }
@@ -74,17 +77,15 @@ public class ContentFragment extends Fragment {
     private void init_res_preview(View rootView) {
 
         Contentgview = (GridView) rootView.findViewById(R.id.picview_gridview);
-        // 数据源
-        //res_preview = new ArrayList<Integer>();
 
-        //if(first_para==0)
-        //res_preview.add(R.drawable.video_preview);
-        //res_preview.add(R.drawable.bookstore);
 
         // 适配器
+
         madapter = new LocalFileAdapter(getActivity(), mfiles);
         // 添加控件适配器
+
         Contentgview.setAdapter(madapter);
+
         // 添加GridView的监听事件
         Contentgview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -93,7 +94,6 @@ public class ContentFragment extends Fragment {
                                     int position, long id) {
 
                 String fileUrl=mfiles.get(position).getAbsolutePath();
-                System.out.println(fileUrl);
                 Intent intent = new Intent(getActivity(),
                         video_player_Activity.class);
                 intent.putExtra("url", fileUrl);
@@ -105,11 +105,11 @@ public class ContentFragment extends Fragment {
     private void checkEnvironment() {
         File f = null;
         boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+
         if (sdCardExist) {
             f = Environment.getExternalStorageDirectory();
             if (f != null) {
                 mSDCardPath = f.getAbsolutePath();
-
             }
 
         } else {
@@ -118,16 +118,16 @@ public class ContentFragment extends Fragment {
                 mSDCardPath = f.getAbsolutePath();
             }
         }
+
     }
 
     private void pathComplete(){
         url=mSDCardPath+"/ebookReader/"+first_para+"/"+second_para+"/";
-        System.out.println(url);
+
     }
 
     private void previewAdd() {
         File f=new File(url);
-            System.out.println(url);
         mfiles.clear();
         if (f!=null) {
             mCurrentPathFile = f;
@@ -138,8 +138,8 @@ public class ContentFragment extends Fragment {
                     continue;
                 }
                addItem(file);
+
             }
-            //madapter.notifyDataSetChanged();
         }
     }
 
@@ -150,54 +150,6 @@ public class ContentFragment extends Fragment {
     }
 
 
-/*    public static class GridView_Detail_Adapter extends BaseAdapter {
-        private Context context;
-        private List<Integer> data;
-
-        public GridView_Detail_Adapter(Context context, List<Integer> data) {
-            super();
-            this.context = context;
-            this.data = data;
-        }
-
-        @Override
-        public int getCount() {
-            return data.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return data.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(
-                        R.layout.fragment_pic_item, null);
-                holder = new ViewHolder();
-                holder.iv = (ImageView) convertView
-                        .findViewById(R.id.pic_grid_item);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            Integer current = data.get(position);
-            holder.iv.setImageResource(current);
-            return convertView;
-        }
-        static class ViewHolder {
-            ImageView iv;
-        }
-
-
-    }*/
 
 }
 

@@ -25,10 +25,9 @@ public class video_player_Activity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.video);
         acceptIntent();
-        //url=url+"/11.mp4";
-        //System.out.println(url);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //setContentView(R.layout.video);
+
         video1=(VideoView)findViewById(R.id.video1);
         mediaco=new MediaController(this);
 
@@ -38,6 +37,7 @@ public class video_player_Activity extends Activity {
             video1.setVideoPath(file.getAbsolutePath());
             video1.setMediaController(mediaco);
             mediaco.setMediaPlayer(video1);
+            video1.start();
             //让VideiView获取焦点
             video1.requestFocus();
         }
@@ -48,10 +48,5 @@ public class video_player_Activity extends Activity {
         Intent intent_accept = getIntent();
         url = intent_accept.getStringExtra("url");
     }
-   // @Override
-   // public boolean onCreateOptionsMenu(Menu menu) {
-   //     getMenuInflater().inflate(R.menu.main, menu);
-    //    return true;
-    //}
 
 }

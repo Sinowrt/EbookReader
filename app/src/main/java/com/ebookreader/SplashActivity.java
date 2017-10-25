@@ -39,7 +39,6 @@ public class SplashActivity extends Activity {
             // 动画重复时执行
             public void onAnimationRepeat(Animation animation) {
                 // TODO Auto-generated method stub
-
             }
 
             // 动画结束时执行
