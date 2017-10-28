@@ -81,7 +81,7 @@ public class ContentFragment extends Fragment {
 
         // 适配器
 
-        madapter = new LocalFileAdapter(getActivity(), mfiles);
+        madapter = new LocalFileAdapter(getActivity(), mfiles,first_para);
         // 添加控件适配器
 
         Contentgview.setAdapter(madapter);

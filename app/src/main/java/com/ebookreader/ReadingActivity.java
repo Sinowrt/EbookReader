@@ -9,12 +9,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresPermission;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +28,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,8 +38,10 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -49,7 +57,9 @@ public class ReadingActivity extends AppCompatActivity {
     private String mp3Url;
     private String imageUrl;
     private String textUrl;
-    private TextView bookContent = null ;
+    private String recordUrl;
+    private TextView bookContent = null;
+    private AudioRecordManager Recorder;
 
 
 
@@ -59,7 +69,9 @@ public class ReadingActivity extends AppCompatActivity {
 
         contentResolver = this.getContentResolver();
         setContentView(R.layout.activity_reading);
+
         acceptIntent();
+        init_date();   //初始化数据
         getFilePath();
         init_toolbar(tittle);
 
@@ -70,6 +82,23 @@ public class ReadingActivity extends AppCompatActivity {
 
         textDisplay();
         mediaPlayer();
+        FloatingActionButton recordBtn = (FloatingActionButton) findViewById(R.id.recordButton);
+        recordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Recorder.isStart==true){
+                    Recorder.stopRecord();
+                }
+                else{
+                    if(player.isPlaying()==true)
+                        player.stop();
+                    Recorder.startRecord(recordUrl);
+
+                }
+
+            }
+        });
+
     }
 
     public void init_toolbar(String tittle){
@@ -91,6 +120,17 @@ public class ReadingActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().hide();
 
+    }
+
+    private void init_date(){
+        try {
+            Recorder = new AudioRecordManager();
+            recordUrl=url+"/recordfile/exampleRecord";
+            Toast.makeText(ReadingActivity.this, recordUrl, Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(ReadingActivity.this, "init AudioRecordManager error！", Toast.LENGTH_SHORT).show();//提示异常
+            finish();//直接关闭界面
+        }
     }
 /*
 *         获取图片
@@ -220,3 +260,4 @@ public class ReadingActivity extends AppCompatActivity {
         }
     }
 }
+

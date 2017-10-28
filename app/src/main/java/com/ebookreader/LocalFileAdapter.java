@@ -19,12 +19,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
+import android.support.annotation.ColorRes;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class LocalFileAdapter extends BaseAdapter {
@@ -45,13 +48,15 @@ public class LocalFileAdapter extends BaseAdapter {
     private Bitmap mVideoBitmap;
     private Bitmap mImageBitmap;
     public static  int count;
+    public int first_param;
 
     private ContentResolver contentResolver;
 
-    public LocalFileAdapter(Context cont, List<File> f) {
+    public LocalFileAdapter(Context cont, List<File> f,int first_para) {
         this.count=0;
         this.context = cont;
         this.files = f;
+        this.first_param=first_para;
 
         mImageBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_image);
         mLoadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_doc);
@@ -97,20 +102,39 @@ public class LocalFileAdapter extends BaseAdapter {
             convertView = layout.inflate(R.layout.fragment_pic_item, parent, false);
             vh.list_file_imag = (ImageView) convertView.findViewById(R.id.pic_grid_item);
             vh.list_file_name = (TextView) convertView.findViewById(R.id.text_grid_item);
+            vh.list_file_price=(TextView) convertView.findViewById(R.id.price);
             convertView.setTag(vh);
-
         } else {
             vh = (ViewH) convertView.getTag();
         }
         File curFile = files.get(position);
 
         String fileName = files.get(position).getName();
-
         String[] names = fileName.split("\\.");
-
         String fileOtherName=names[0];     //得到不带后缀的文件名
 
         vh.list_file_name.setText(fileOtherName);
+
+        /**
+         *      @适配书城界面
+         *
+         *      判断从detailactivity中传入的参数
+         *
+         *      未完成书城数据库接入
+         *
+         *      根据书名查找相应price
+        * */
+        if(first_param==8){
+
+            LinearLayout linearLayout=(LinearLayout) convertView.findViewById(R.id.pic_item_linearLayout);
+            ViewGroup.LayoutParams lp;
+            lp= linearLayout.getLayoutParams();
+            lp.height=250;
+            linearLayout.setLayoutParams(lp);
+            vh.list_file_price.setText("¥27.22");
+            vh.list_file_price.setTextColor(Color.RED);
+        }
+
 
             vh.list_file_imag.setImageResource(R.drawable.filetype_doc);
 
@@ -162,6 +186,7 @@ public class LocalFileAdapter extends BaseAdapter {
     public static class ViewH {
         ImageView list_file_imag;
         TextView list_file_name;
+        TextView list_file_price;
     }
 
 
