@@ -99,6 +99,14 @@ public class ReadingActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton recplayBtn = (FloatingActionButton) findViewById(R.id.recplayButton);
+        recplayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Recorder.play();
+            }
+        });
+
     }
 
     public void init_toolbar(String tittle){

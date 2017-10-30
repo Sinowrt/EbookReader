@@ -1,12 +1,23 @@
 package com.ebookreader;
 
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
+import android.media.AudioTrack;
 import android.media.MediaRecorder;
+import android.util.Log;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static android.R.attr.offset;
 
 /*
 *  @ 录音管理类
@@ -22,7 +33,11 @@ public class AudioRecordManager {
     private Thread recordThread;
     public boolean isStart = false;
     private static AudioRecordManager mInstance;
-    private  int bufferSize;
+    private int bufferSize;
+
+    private File pcmfile = null;//
+
+    AudioTrack player;
 
     public AudioRecordManager() {
         bufferSize = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
@@ -142,6 +157,7 @@ public class AudioRecordManager {
         try {
             setPath(path);
             startThread();
+            pcmfile = new File(path);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -170,4 +186,44 @@ public class AudioRecordManager {
         }
     }
 
+    public void play()
+    {
+        DataInputStream dis=null;
+        try {
+            //从音频文件中读取声音
+            dis=new DataInputStream(new BufferedInputStream(new FileInputStream(pcmfile)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //最小缓存区
+        int bufferSizeInBytes=AudioTrack.getMinBufferSize(8000,AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT);
+        //创建AudioTrack对象   依次传入 :流类型、采样率（与采集的要一致）、音频通道（采集是IN 播放时OUT）、量化位数、最小缓冲区、模式
+        player=new AudioTrack(AudioManager.STREAM_MUSIC,8000,AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT, bufferSizeInBytes, AudioTrack.MODE_STREAM);
+
+        byte[] data =new byte [bufferSizeInBytes];
+        player.play();//开始播放
+        while(true)
+        {
+            int i=0;
+            try {
+                while(dis.available()>0&&i<data.length)
+                {
+                    data[i]=dis.readByte();//录音时write Byte 那么读取时就该为readByte要相互对应
+                    i++;
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            player.write(data,0,data.length);
+
+            if(i!=bufferSizeInBytes) //表示读取完了
+            {
+                player.stop();//停止播放
+                player.release();//释放资源
+                break;
+            }
+        }
+
+    }
 }
