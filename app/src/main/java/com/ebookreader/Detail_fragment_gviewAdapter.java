@@ -6,18 +6,14 @@ package com.ebookreader;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,20 +22,16 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
-import android.support.annotation.ColorRes;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class LocalFileAdapter extends BaseAdapter {
+public class Detail_fragment_gviewAdapter extends BaseAdapter {
     private Context context;
     private List<File> files;
     private LayoutInflater layout;
@@ -52,7 +44,7 @@ public class LocalFileAdapter extends BaseAdapter {
 
     private ContentResolver contentResolver;
 
-    public LocalFileAdapter(Context cont, List<File> f,int first_para) {
+    public Detail_fragment_gviewAdapter(Context cont, List<File> f, int first_para) {
         this.count=0;
         this.context = cont;
         this.files = f;
@@ -99,7 +91,7 @@ public class LocalFileAdapter extends BaseAdapter {
         ViewH vh = null;
         if (convertView == null) {
             vh = new ViewH();
-            convertView = layout.inflate(R.layout.fragment_pic_item, parent, false);
+            convertView = layout.inflate(R.layout.detail_fragment_gview_item, parent, false);
             vh.list_file_imag = (ImageView) convertView.findViewById(R.id.pic_grid_item);
             vh.list_file_name = (TextView) convertView.findViewById(R.id.text_grid_item);
             vh.list_file_price=(TextView) convertView.findViewById(R.id.price);

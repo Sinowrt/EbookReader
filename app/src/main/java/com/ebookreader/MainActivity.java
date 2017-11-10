@@ -8,6 +8,7 @@ import java.util.Map;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         int [] to = {R.id.image,R.id.text};
         sim_adapter = new SimpleAdapter(this, data_list, R.layout.main_gview_item, from, to);
         //配置适配器
+
         gview.setAdapter(sim_adapter);
 
         gview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main, menu);
         return true;
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {

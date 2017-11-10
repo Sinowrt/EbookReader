@@ -1,34 +1,24 @@
 package com.ebookreader;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
 
 import android.os.Environment;
-import android.provider.BaseColumns;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 
-import android.support.v7.widget.FitWindowsViewGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Switch;
 
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContentFragment extends Fragment {
+public class DetailAct_Fragment extends Fragment {
     private View rootView;
 
     private GridView Contentgview;
@@ -36,12 +26,13 @@ public class ContentFragment extends Fragment {
 
     public int first_para;
     private int second_para;
+    private int third_para;
 
     private String mSDCardPath;
     private List<File> mfiles = new ArrayList<File>();
     private File mCurrentPathFile = null;
     private static String url=null;
-    private static LocalFileAdapter madapter;
+    private static Detail_fragment_gviewAdapter madapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,13 +40,16 @@ public class ContentFragment extends Fragment {
 
         first_para= getArguments().getInt("first_type");
         second_para=getArguments().getInt("second_type");
+        third_para=getArguments().getInt("third_path");
+
         checkEnvironment();
+
         pathComplete();
         previewAdd();
 
 
         if (null == rootView) {
-            rootView = inflater.inflate(R.layout.fragment_picview, container,
+            rootView = inflater.inflate(R.layout.detail_fragment_mainview, container,
                     false);
             initView(rootView);
         }
@@ -81,7 +75,7 @@ public class ContentFragment extends Fragment {
 
         // 适配器
 
-        madapter = new LocalFileAdapter(getActivity(), mfiles,first_para);
+        madapter = new Detail_fragment_gviewAdapter(getActivity(), mfiles,first_para);
         // 添加控件适配器
 
         Contentgview.setAdapter(madapter);
@@ -133,7 +127,12 @@ public class ContentFragment extends Fragment {
     }
 
     private void pathComplete(){
-        url=mSDCardPath+"/ebookReader/"+first_para+"/"+second_para+"/";
+        if(third_para==-1){
+        url=mSDCardPath+"/ebookReader/"+first_para+"/"+second_para+"/";}
+        else
+        {
+            url=mSDCardPath+"/ebookReader/"+first_para+"/"+second_para+"/"+third_para+"/";
+        }
 
     }
 
@@ -156,11 +155,6 @@ public class ContentFragment extends Fragment {
 
     private void addItem(File f) {
         mfiles.add(f);
-
-        //madapter.notifyDataSetChanged();
     }
-
-
-
 }
 
