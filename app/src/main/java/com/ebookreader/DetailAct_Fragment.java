@@ -143,13 +143,16 @@ public class DetailAct_Fragment extends Fragment {
             mCurrentPathFile = f;
 
             File[] files = f.listFiles();
-            for (File file : files) {
-                if (file.isHidden()) {
-                    continue;
-                }
-               addItem(file);
+            Log.v("TAG","LENGRH"+files.length);
 
-            }
+                for (File file : files) {
+                    if (file.isHidden()) {
+                        continue;
+                    }
+                    addItem(file);
+
+                }
+
         }
     }
 

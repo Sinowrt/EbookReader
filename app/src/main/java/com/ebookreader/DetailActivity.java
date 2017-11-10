@@ -77,6 +77,7 @@ public class DetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         /*初始化*/
+        Log.v("TAG","sussccesssssss");
         acceptIntent();
         get_Str();
         gPosition = 0;   //not init will cause The array bounds 17.10.8
@@ -226,9 +227,6 @@ public class DetailActivity extends FragmentActivity {
         }
     }
 
-    private void close_group(int pos)
-    {
-        expandableListView.collapseGroup(pos);
-    }
+
 }
 
