@@ -1,6 +1,7 @@
 package com.ebookreader;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.os.Environment;
@@ -46,6 +47,13 @@ public class DetailAct_Fragment extends Fragment {
 
         pathComplete();
         previewAdd();
+
+        //DatabaseContext dbContext = new DatabaseContext(this.getContext());
+        //DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
+        //SQLiteDatabase rdb=dbHelper.getReadableDatabase();
+        SQLiteDatabase wdb=SQLiteDatabase.openOrCreateDatabase("/storage/3633-3031/ebookReader/db/reader.db",null);
+
+
 
 
         if (null == rootView) {

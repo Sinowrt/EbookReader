@@ -19,7 +19,7 @@ import java.io.InputStream;
 
 import static android.R.attr.offset;
 
-/*
+/**
 *  @ 录音管理类
 *
 *  @ 实现readingActivity下的录音
