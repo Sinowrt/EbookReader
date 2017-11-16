@@ -48,10 +48,10 @@ public class DetailAct_Fragment extends Fragment {
         pathComplete();
         previewAdd();
 
-        //DatabaseContext dbContext = new DatabaseContext(this.getContext());
-        //DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
-        //SQLiteDatabase rdb=dbHelper.getReadableDatabase();
-        SQLiteDatabase wdb=SQLiteDatabase.openOrCreateDatabase("/storage/3633-3031/ebookReader/db/reader.db",null);
+
+
+
+        /*SQLiteDatabase wdb=SQLiteDatabase.openOrCreateDatabase("/storage/3633-3031/ebookReader/db/reader.db",null);*/
 
 
 

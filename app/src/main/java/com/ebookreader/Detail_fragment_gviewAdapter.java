@@ -22,6 +22,7 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,6 +119,12 @@ public class Detail_fragment_gviewAdapter extends BaseAdapter {
         * */
         if(first_param==8){
 
+            DatabaseContext dbContext = new DatabaseContext(this.context);
+            DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
+
+            Cursor cursor=dbHelper.query(new String[]{"书名","价格","封面路径"},"type=0",null,null,null,null,null);
+
+            Log.d("Tag","cursor num="+cursor.getCount());
             LinearLayout linearLayout=(LinearLayout) convertView.findViewById(R.id.pic_item_linearLayout);
             ViewGroup.LayoutParams lp;
             lp= linearLayout.getLayoutParams();
