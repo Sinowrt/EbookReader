@@ -1,13 +1,23 @@
 package com.ebookreader;
 
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +27,16 @@ import java.util.List;
  * 二级目录listview以及gridview视图控制
  */
 
-public class DetailActivity extends FragmentActivity {
+public class DetailActivity extends AppCompatActivity {
     /*ListView填充用*/
 
     public static int first_param = 0;
     private static int second_param=0;
+    private String first_name;
+
+    private Button shopcart_btn;
+    private Button drawer_btn;
+    private DrawerLayout mDrawerLayout;
 
     public List<String> group_strs=new ArrayList<String>();
     public List<List<String>> child_str=new ArrayList<List<String>>();
@@ -76,15 +91,18 @@ public class DetailActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        /*初始化*/
-        Log.v("TAG","sussccesssssss");
         acceptIntent();
         get_Str();
         gPosition = 0;   //not init will cause The array bounds 17.10.8
         initView();
     }
 
+
+
     private void initView() {
+
+            init_toolbar(first_name);
+
 
             //匹配控件
             expandableListView = (ExpandableListView) findViewById(R.id.expandablelistview);
@@ -209,6 +227,7 @@ public class DetailActivity extends FragmentActivity {
         Bundle bundle = intent_accept.getExtras();
         // String name = bundle.getString("first");
         first_param = bundle.getInt("first");
+        first_name =bundle.getString("first_name");
     }
 
     /*二级目录字符串装载strs*/
@@ -225,6 +244,59 @@ public class DetailActivity extends FragmentActivity {
             }
             child_str.add(e);
         }
+    }
+
+    public void init_toolbar(String tittle){
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        shopcart_btn=(Button) findViewById(R.id.detail_tittlebtn);
+        TextView tv=(TextView) findViewById(R.id.detail_tittle);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerlayout);
+        drawer_btn =(Button) findViewById(R.id.drawer_btn);
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+        drawer_btn.setText("关闭分类");
+        drawer_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                boolean isDrawerOpen = mDrawerLayout.isDrawerOpen(Gravity.LEFT);
+                if(isDrawerOpen){
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    drawer_btn.setText("展开分类");}
+                else{
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                    drawer_btn.setText("关闭分类");}
+            }
+
+        });
+
+        tv.setTextColor(Color.parseColor("#FFFFFF"));
+        tv.setText(tittle);
+
+        if(first_param==8) {
+            shopcart_btn.setText("购物车");
+            shopcart_btn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(DetailActivity.this,Shopcart_Activity.class);
+
+                    startActivity(intent);
+                }
+
+            });
+        }
+
+        mToolbar.setTitle("");
+
+        setSupportActionBar(mToolbar);
+//        getSupportActionBar().hide();
+
     }
 
 

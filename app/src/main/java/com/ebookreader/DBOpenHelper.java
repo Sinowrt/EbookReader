@@ -84,11 +84,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      *                            如“2”表示获取两条数据）
      * @return
      */
-    public Cursor query(String[] columns, String selection, String[] selectionArgs,
+    public Cursor query(String tableName,String[] columns, String selection, String[] selectionArgs,
                         String groupBy, String having, String orderBy, String limit) {
 
         SQLiteDatabase rdb = getReadableDatabase();
-        return rdb.query("books", columns, selection, selectionArgs, groupBy,
+        return rdb.query(tableName, columns, selection, selectionArgs, groupBy,
                 having, orderBy, limit);
     }
 

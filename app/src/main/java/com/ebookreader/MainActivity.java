@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
 
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent_toDetail = new Intent();
         intent_toDetail.setClass(this,DetailActivity.class);
         intent_toDetail.putExtra("first", pos);
+        intent_toDetail.putExtra("first_name",iconName[pos]);
         startActivity(intent_toDetail);
     }
 

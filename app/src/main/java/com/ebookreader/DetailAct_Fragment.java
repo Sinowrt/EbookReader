@@ -1,6 +1,7 @@
 package com.ebookreader;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -29,6 +30,7 @@ public class DetailAct_Fragment extends Fragment {
     private int second_para;
     private int third_para;
 
+    private Cursor cursor;
     private String mSDCardPath;
     private List<File> mfiles = new ArrayList<File>();
     private File mCurrentPathFile = null;
@@ -42,20 +44,13 @@ public class DetailAct_Fragment extends Fragment {
         first_para= getArguments().getInt("first_type");
         second_para=getArguments().getInt("second_type");
         third_para=getArguments().getInt("third_path");
-
         checkEnvironment();
-
         pathComplete();
-        previewAdd();
-
-
-
-
-        /*SQLiteDatabase wdb=SQLiteDatabase.openOrCreateDatabase("/storage/3633-3031/ebookReader/db/reader.db",null);*/
-
-
-
-
+        if(first_para==8) {
+            Initdb();
+        }
+        else
+            previewAdd();
         if (null == rootView) {
             rootView = inflater.inflate(R.layout.detail_fragment_mainview, container,
                     false);
@@ -75,15 +70,28 @@ public class DetailAct_Fragment extends Fragment {
         init_res_preview(rootView);
     }
 
+    private void Initdb(){
+        DatabaseContext dbContext = new DatabaseContext(this.getContext());
+        DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
+
+        cursor=dbHelper.query("books",new String[]{"书名","价格","封面路径"},"type=0",null,null,null,null,null);
+
+    }
+
 
     private void init_res_preview(View rootView) {
 
         Contentgview = (GridView) rootView.findViewById(R.id.picview_gridview);
 
+        if(first_para!=8){
 
-        // 适配器
+            madapter = new Detail_fragment_gviewAdapter(getActivity(), mfiles);}
 
-        madapter = new Detail_fragment_gviewAdapter(getActivity(), mfiles,first_para);
+        else{
+            madapter=new Detail_fragment_gviewAdapter(getActivity(),cursor);
+            Log.d("Tag",""+cursor.getCount());
+        }
+
         // 添加控件适配器
 
         Contentgview.setAdapter(madapter);
@@ -95,8 +103,6 @@ public class DetailAct_Fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-
-
                 startActivity(intent_create(position));
             }
         });
@@ -105,7 +111,7 @@ public class DetailAct_Fragment extends Fragment {
     private Intent intent_create(int position){
         Intent intent;
         String fileUrl=mfiles.get(position).getAbsolutePath();
-        if(first_para==0&&second_para!=0){
+        if(first_para==0&&second_para==1){
             intent = new Intent(getActivity(), ReadingActivity.class);}
 
         else{
@@ -144,6 +150,7 @@ public class DetailAct_Fragment extends Fragment {
 
     }
 
+
     private void previewAdd() {
         File f=new File(url);
         mfiles.clear();
@@ -151,21 +158,20 @@ public class DetailAct_Fragment extends Fragment {
             mCurrentPathFile = f;
 
             File[] files = f.listFiles();
-            Log.v("TAG","LENGRH"+files.length);
 
                 for (File file : files) {
                     if (file.isHidden()) {
                         continue;
                     }
                     addItem(file);
-
                 }
-
         }
     }
 
     private void addItem(File f) {
         mfiles.add(f);
     }
+
+
 }
 

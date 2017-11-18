@@ -108,12 +108,6 @@ public class DetailAct_exlistview_Adapter extends BaseExpandableListAdapter{
             holder = (ChildHolder)view.getTag();
         }
 
-        /*if(childPosition == 0){
-            holder.divider.setVisibility(View.GONE);
-        }*/
-
-        //holder.sound.setBackgroundResource(R.drawable.sound);
-
         holder.childName.setText(childArray.get(groupPosition).get(childPosition));
 
         if(groupPosition==DetailActivity.gPosition&&childPosition==DetailActivity.cPosition){
@@ -132,12 +126,9 @@ public class DetailAct_exlistview_Adapter extends BaseExpandableListAdapter{
 
     class GroupHolder{
         public TextView groupName;
-       // public ImageView arrow;
     }
 
     class ChildHolder{
         public TextView childName;
-        public ImageView sound;
-        public ImageView divider;
     }
 }

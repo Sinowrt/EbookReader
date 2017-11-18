@@ -7,7 +7,9 @@
         android:id="@+id/start"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title="退出"/>
+        android:title="退出"
+
+        />
 
 
 

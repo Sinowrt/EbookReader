@@ -83,6 +83,8 @@ public class ReadingActivity extends AppCompatActivity {
         textDisplay();
         mediaPlayer();
         FloatingActionButton recordBtn = (FloatingActionButton) findViewById(R.id.recordButton);
+
+
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
