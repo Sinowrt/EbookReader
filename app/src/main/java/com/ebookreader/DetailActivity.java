@@ -179,6 +179,8 @@ public class DetailActivity extends AppCompatActivity {
                     bundle.putInt("third_path",-1);   //-1表示无三级目录
                     myFragment.setArguments(bundle);
                     fragmentTransaction.commit();
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    drawer_btn.setText("展开分类");
                     return true;
                 }
                 else{
@@ -193,6 +195,7 @@ public class DetailActivity extends AppCompatActivity {
                     bundle.putInt("third_path",0);
                     myFragment.setArguments(bundle);
                     fragmentTransaction.commit();
+
                 }
                 return false;
             }
@@ -215,6 +218,8 @@ public class DetailActivity extends AppCompatActivity {
                 bundle.putInt("third_path",childPos);
                 myFragment.setArguments(bundle);
                 fragmentTransaction.commit();
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                drawer_btn.setText("展开分类");
                 return true;
             }
         });

@@ -1,11 +1,21 @@
 package com.ebookreader;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +40,7 @@ public class Shopcart_Activity extends AppCompatActivity {
         data=new ArrayList<Content>();
         Initdb();
         listAdd();
+        init_toolbar("购物车");
         adapter=new Shopcart_Gview_Adapter(this,data);
         gridView.setAdapter(adapter);
     }
@@ -42,22 +53,23 @@ public class Shopcart_Activity extends AppCompatActivity {
     }
 
     public List<Content> listAdd(){
-        Content content=new Content();
+
         data.clear();
         for(int i=0;i<cursor.getCount();i++){
-            if(cursor.move(i+1)){
+            Content content=new Content();
+            if(cursor.moveToPosition(i)){
+
             content.item_number=cursor.getString(0);
-                Log.d("Tag",cursor.getString(0));
+
             content.bookname=cursor.getString(1);
             content.price=cursor.getDouble(2);
             content.number=cursor.getInt(3);
             content.imagePath=cursor.getString(4);
             content.author=cursor.getString(5);
-
-            data.add(content);}
-            Log.d("Tag",""+data.size());
-
+            }
+            data.add(content);
         }
+        Log.d("Tag",data.get(0).author);
         cursor.close();
         return data;
     }
@@ -69,6 +81,38 @@ public class Shopcart_Activity extends AppCompatActivity {
         String author;
         double price;
         int number;
+    }
+
+    public void init_toolbar(String tittle){
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.shopcart_toolbar);
+
+        TextView tittle_tv=(TextView) findViewById(R.id.shopcart_tittle);
+        TextView addup_tv=(TextView) findViewById(R.id.shopcart_addup);
+
+        addup_tv.setTextColor(Color.parseColor("#FFFFFF"));
+        tittle_tv.setTextColor(Color.parseColor("#FFFFFF"));
+        tittle_tv.setText(tittle);
+        double total=0;
+        for(int i=0;i<data.size();i++){
+            total=total+data.get(i).price*data.get(i).number;
+        }
+        DecimalFormat form=new DecimalFormat("0.00");
+        String price=form.format(total);
+        addup_tv.setText("合计：¥"+price);
+
+        mToolbar.setTitle("");
+
+        setSupportActionBar(mToolbar);
+//        getSupportActionBar().hide();
+
     }
 
 }

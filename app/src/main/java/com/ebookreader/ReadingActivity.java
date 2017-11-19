@@ -1,7 +1,6 @@
 package com.ebookreader;
 
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,44 +8,27 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioFormat;
-import android.media.AudioRecord;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresPermission;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import static android.R.id.button1;
-import static android.R.id.hint;
 
 public class ReadingActivity extends AppCompatActivity {
     private ContentResolver contentResolver;
@@ -60,6 +42,11 @@ public class ReadingActivity extends AppCompatActivity {
     private String recordUrl;
     private TextView bookContent = null;
     private AudioRecordManager Recorder;
+    private FloatingActionButton recordBtn;
+    private FloatingActionButton recplayBtn;
+//    private FloatingActionButton recplaystopBtn;
+    private FloatingActionButton playBtn;
+    private FloatingActionButton playStopbtn;
 
 
 
@@ -71,6 +58,7 @@ public class ReadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reading);
 
         acceptIntent();
+        recordUrl=url+"/recordfile/exampleRecord";
         init_date();   //初始化数据
         getFilePath();
         init_toolbar(tittle);
@@ -82,34 +70,81 @@ public class ReadingActivity extends AppCompatActivity {
 
         textDisplay();
         mediaPlayer();
-        FloatingActionButton recordBtn = (FloatingActionButton) findViewById(R.id.recordButton);
+        recordBtn = (FloatingActionButton) findViewById(R.id.recordButton);
+        recplayBtn = (FloatingActionButton) findViewById(R.id.recordplayBtn);
+
+//        recplaystopBtn=(FloatingActionButton) findViewById(R.id.recplaystopBtn);
+        playBtn=(FloatingActionButton) findViewById(R.id.playBtn);
+        playStopbtn=(FloatingActionButton) findViewById(R.id.playstopBtn);
+
 
 
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Recorder.isStart==true){
+                if (Recorder.mRecorder == null) init_date();
+
+                if (Recorder.isStart == true) {
                     Recorder.stopRecord();
-                }
-                else{
-                    if(player.isPlaying()==true)
-                        player.stop();
+                    recordBtn.setImageDrawable(getResources().getDrawable(R.drawable.record));
+                } else {
+                    if (player.isPlaying() == true) player.stop();
+                    if (Recorder.isRecordplay == true) Recorder.stopPlay();
                     Recorder.startRecord(recordUrl);
+                    recordBtn.setImageDrawable(getResources().getDrawable(R.drawable.stoprecord));
 
                 }
 
             }
         });
 
-        FloatingActionButton recplayBtn = (FloatingActionButton) findViewById(R.id.recplayButton);
+
+
+
+
+//        if(!new File(recordUrl).exists()){
+//            recplayBtn.setEnabled(false);
+//        }
+
+
         recplayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Recorder.play();
+                if(!Recorder.isRecordplay){
+                    if(player.isPlaying()) player.stop();
+                    Recorder.play(recordUrl);}
+            }
+        });
+
+        /*recplaystopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Recorder.stopPlay();
+            }
+        });
+*/
+        playBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!player.isPlaying())
+                    play();
+
+            }
+        });
+
+        playStopbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(player.isPlaying())
+                player.stop();
+
             }
         });
 
     }
+
+
 
     public void init_toolbar(String tittle){
         if (Build.VERSION.SDK_INT >= 21) {
@@ -135,7 +170,7 @@ public class ReadingActivity extends AppCompatActivity {
     private void init_date(){
         try {
             Recorder = new AudioRecordManager();
-            recordUrl=url+"/recordfile/exampleRecord";
+
             Toast.makeText(ReadingActivity.this, recordUrl, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(ReadingActivity.this, "init AudioRecordManager error！", Toast.LENGTH_SHORT).show();//提示异常

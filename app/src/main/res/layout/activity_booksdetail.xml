@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    tools:context="com.ebookreader.Booksdetail_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <ImageView
+            android:id="@+id/bk_cover"
+            android:layout_width="400dp"
+            android:layout_height="400dp" />
+
+        <LinearLayout
+            android:layout_width="500dp"
+            android:layout_height="400dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/bk_bookname"
+                android:textSize="20dp"
+                android:layout_width="500dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:id="@+id/bk_summary"
+                android:layout_width="500dp"
+                android:layout_height="170dp" />
+
+            <LinearLayout
+                android:layout_width="500dp"
+                android:layout_height="200dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/bk_booksnum"
+                        android:layout_width="300dp"
+                        android:layout_height="60dp" />
+                    <TextView
+                        android:id="@+id/bk_price"
+                        android:layout_width="300dp"
+                        android:layout_height="60dp" />
+                    <TextView
+                        android:id="@+id/bk_author"
+                        android:layout_width="300dp"
+                        android:layout_height="60dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="200dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="50dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+                     <Button
+                         android:id="@+id/bk_decrease"
+                         android:layout_width="50dp"
+                         android:layout_height="50dp"
+                         android:text="-"
+                         android:textSize="30dp"
+                         />
+                        <TextView
+                            android:id="@+id/bk_goodnum"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:gravity="center_horizontal"
+                            android:textSize="30dp"
+                            />
+                        <Button
+                            android:id="@+id/bk_increase"
+                            android:textSize="30dp"
+                            android:text="+"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp" />
+
+                    </LinearLayout>
+                <Button
+                    android:id="@+id/bk_shopcartadd"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:background="@color/colorPrimary"
+                    android:text="加入购物车"
+                    android:textSize="20dp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -30,6 +30,8 @@ public class DetailAct_Fragment extends Fragment {
     private int second_para;
     private int third_para;
 
+    DatabaseContext dbContext ;
+    DBOpenHelper dbHelper ;
     private Cursor cursor;
     private String mSDCardPath;
     private List<File> mfiles = new ArrayList<File>();
@@ -71,10 +73,11 @@ public class DetailAct_Fragment extends Fragment {
     }
 
     private void Initdb(){
-        DatabaseContext dbContext = new DatabaseContext(this.getContext());
-        DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
+        dbContext = new DatabaseContext(this.getContext());
+        dbHelper = new DBOpenHelper(dbContext);
+        String arg="type="+second_para;
 
-        cursor=dbHelper.query("books",new String[]{"书名","价格","封面路径"},"type=0",null,null,null,null,null);
+        cursor=dbHelper.query("books",new String[]{"书名","价格","封面路径","商品编号"},arg,null,null,null,null,null);
 
     }
 
@@ -89,7 +92,7 @@ public class DetailAct_Fragment extends Fragment {
 
         else{
             madapter=new Detail_fragment_gviewAdapter(getActivity(),cursor);
-            Log.d("Tag",""+cursor.getCount());
+
         }
 
         // 添加控件适配器
@@ -110,13 +113,23 @@ public class DetailAct_Fragment extends Fragment {
 
     private Intent intent_create(int position){
         Intent intent;
-        String fileUrl=mfiles.get(position).getAbsolutePath();
+
         if(first_para==0&&second_para==1){
             intent = new Intent(getActivity(), ReadingActivity.class);}
 
-        else{
+        else if(first_para==8){
+            intent= new Intent(getActivity(),Booksdetail_Activity.class);
+
+            if(cursor.moveToPosition(position))
+
+                intent.putExtra("books_number",cursor.getString(3));
+
+            return intent;
+            }
+            else{
             intent = new Intent(getActivity(), video_player_Activity.class);
         }
+        String fileUrl=mfiles.get(position).getAbsolutePath();
             intent.putExtra("url", fileUrl);
             return intent;
     }

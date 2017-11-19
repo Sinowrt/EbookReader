@@ -41,10 +41,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param values ContentValues类型的一个封装了列名称和列值的Map
      * @return
      */
-    public long insert(String nullColumnHack, ContentValues values) {
+    public long insert(String table_name, String nullColumnHack, ContentValues values) {
 
         SQLiteDatabase wdb = getWritableDatabase();
-        return wdb.insert("books", nullColumnHack, values);
+        return wdb.insert(table_name, nullColumnHack, values);
     }
 
     /**
@@ -54,10 +54,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param whereArgs 更新条件数组
      * @return
      */
-    public int update(ContentValues values, String whereClause, String[] whereArgs)
+    public int update(String table,ContentValues values, String whereClause, String[] whereArgs)
     {
         SQLiteDatabase wdb = getWritableDatabase();
-        return wdb.update("books", values, whereClause, whereArgs);
+        return wdb.update(table, values, whereClause, whereArgs);
     }
 
     /**

@@ -34,7 +34,8 @@
         <activity
             android:name=".ReadingActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Shopcart_Activity" />
+        <activity android:name=".Shopcart_Activity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".Booksdetail_Activity"></activity>
     </application>
 

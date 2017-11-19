@@ -65,7 +65,7 @@ public class Detail_fragment_gviewAdapter extends BaseAdapter {
         if(getView_type==0)
             return files.size();
         else
-            Log.d("Tag",""+cursor.getCount());
+
             return cursor.getCount();
     }
 
@@ -161,12 +161,15 @@ public class Detail_fragment_gviewAdapter extends BaseAdapter {
 
 
 
-            if(cursor.move(position+1)){
+            if(cursor.moveToPosition(position)){
                 vh.list_file_name.setText(cursor.getString(0));
+
                 String price=form.format(cursor.getDouble(1));
                 vh.list_file_price.setText("¥"+price);
                 vh.list_file_price.setTextColor(Color.RED);
                 String path=cursor.getString(2);
+
+
                 BitmapDrawable drawable = image_adapter.getBitmapFromMemoryCache(path);//先查看缓存是否有
 
                 if (drawable != null) {
@@ -179,6 +182,7 @@ public class Detail_fragment_gviewAdapter extends BaseAdapter {
                     vh.list_file_imag.setImageDrawable(asyncDrawable);
                     task.execute(path);
                 }
+
             }
 
 

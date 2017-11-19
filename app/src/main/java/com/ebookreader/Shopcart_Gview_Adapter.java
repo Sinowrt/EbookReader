@@ -1,6 +1,7 @@
 package com.ebookreader;
 
 
+        import java.text.DecimalFormat;
         import java.util.List;
         import android.content.Context;
 
@@ -32,6 +33,7 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
         this.mDatas = mDatas;
         image_adapter=new Image_Adapter(context);
         mLoadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_doc);
+        Log.d("Tag","000000"+mDatas.get(0).author);
     }
 
     @Override
@@ -74,15 +76,20 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+
         viewHolder.item_number.setText("商品编号："+mDatas.get(position).item_number);
+        //Log.d("Tag",""+position);
+
         viewHolder.bookname.setText("书名：《"+mDatas.get(position).bookname+"》");
         viewHolder.author.setText("作者："+mDatas.get(position).author);
-        viewHolder.price.setText("价格："+mDatas.get(position).price);
+        //Log.d("Tag",""+mDatas.get(position).author);
+        DecimalFormat form=new DecimalFormat("0.00");
+        String price=form.format(mDatas.get(position).price);
+        viewHolder.price.setText("价格："+price);
         viewHolder.number.setText("购买数量："+mDatas.get(position).number);
 
         String image_path=mDatas.get(position).imagePath;
 
-        Log.d("Tag",image_path);
 
         BitmapDrawable drawable = image_adapter.getBitmapFromMemoryCache(image_path);//先查看缓存是否有
 
