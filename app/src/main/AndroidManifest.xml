@@ -11,21 +11,24 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_login"
+        android:icon="@drawable/applogo"
         android:label="凤凰读书"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SplashActivity" />
         <activity
             android:name=".DetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -34,9 +37,14 @@
         <activity
             android:name=".ReadingActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Shopcart_Activity"
-                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".Booksdetail_Activity"></activity>
+        <activity
+            android:name=".Shopcart_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".Booksdetail_Activity" />
+        <activity
+            android:name=".order_detail_confirm"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

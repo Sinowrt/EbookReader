@@ -32,6 +32,7 @@ public class Image_Adapter {
     public Image_Adapter(Context cont){
         this.context=cont;
 
+        mLoadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_doc);
         mImageBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_image);
         mLoadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_doc);
         mVideoBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_video);
@@ -47,6 +48,21 @@ public class Image_Adapter {
                     return drawable.getBitmap().getByteCount();
                 }
             };}
+    }
+
+    public void setDrawable(String picPath,ImageView imageView){
+        BitmapDrawable drawable = getBitmapFromMemoryCache(picPath);//先查看缓存是否有
+
+        if (drawable != null) {
+            imageView.setImageDrawable(drawable);
+
+        } else if (this.cancelPotentialWork(picPath, imageView)) {//没有就异步缓存
+
+            BitmapWorkerTask task = new BitmapWorkerTask(imageView);
+            AsyncDrawable asyncDrawable = new AsyncDrawable(context.getResources(), mLoadingBitmap, task);
+            imageView.setImageDrawable(asyncDrawable);
+            task.execute(picPath);
+        }
     }
 
     /**
@@ -118,6 +134,9 @@ public class Image_Adapter {
         public BitmapWorkerTask(ImageView imageView) {
             imageViewReference = new WeakReference<ImageView>(imageView);
         }
+        public BitmapWorkerTask(){
+
+        }
 
         @Override
         protected BitmapDrawable doInBackground(String... params) {
@@ -136,7 +155,6 @@ public class Image_Adapter {
                     bitmap = mVideoBitmap;
                 }
             }
-
 
             BitmapDrawable drawable = new BitmapDrawable(context.getResources(), bitmap);
             addBitmapToMemoryCache(imageUrl, drawable);

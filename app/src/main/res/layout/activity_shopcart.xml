@@ -10,6 +10,15 @@
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true">
 
+        <TextView
+            android:id="@+id/shopcart_addup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:background="@color/colorPrimary"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/shopcart_tittle"
@@ -20,15 +29,17 @@
             android:background="@color/colorPrimary"
             android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/shopcart_addup"
+        <Button
+            android:id="@+id/submitOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            android:background="@color/colorPrimary"
-            android:textSize="20dp" />
+            android:text="提交订单"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"/>
+
+
 
 
     </android.support.v7.widget.Toolbar>

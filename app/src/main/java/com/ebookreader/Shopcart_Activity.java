@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class Shopcart_Activity extends AppCompatActivity {
     private Cursor cursor;
     private GridView gridView;
     private Shopcart_Gview_Adapter adapter;
+    private static double total;
+    private static TextView addup_tv;
+    private Button submitOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +42,27 @@ public class Shopcart_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_shopcart);
         gridView = (GridView) findViewById(R.id.shopcart_gridview);
         data=new ArrayList<Content>();
+        total=0;
         Initdb();
         listAdd();
         init_toolbar("购物车");
         adapter=new Shopcart_Gview_Adapter(this,data);
         gridView.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Initdb();
+        listAdd();
+        adapter.notifyDataSetChanged();
+        addup_update(data);
     }
 
     public void Initdb(){
-        DatabaseContext dbContext = new DatabaseContext(this);
-        DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
+//        DatabaseContext dbContext = new DatabaseContext(this);
+        DBOpenHelper dbHelper = new DBOpenHelper(this);
 
         cursor=dbHelper.query("shopcart",new String[]{"商品编号","书名","价格","购买数量","封面路径","作者"},null,null,null,null,null,null);
     }
@@ -69,7 +84,7 @@ public class Shopcart_Activity extends AppCompatActivity {
             }
             data.add(content);
         }
-        Log.d("Tag",data.get(0).author);
+        //Log.d("Tag",data.get(0).author);
         cursor.close();
         return data;
     }
@@ -95,24 +110,42 @@ public class Shopcart_Activity extends AppCompatActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.shopcart_toolbar);
 
         TextView tittle_tv=(TextView) findViewById(R.id.shopcart_tittle);
-        TextView addup_tv=(TextView) findViewById(R.id.shopcart_addup);
+        submitOrder=(Button) findViewById(R.id.submitOrder);
+        submitOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(total==0) Toast.makeText(Shopcart_Activity.this,"当前购物车无商品",Toast.LENGTH_SHORT).show();
+                else{
+                Intent intent_toDetail = new Intent();
+                intent_toDetail.setClass(Shopcart_Activity.this,order_detail_confirm.class);
+                intent_toDetail.putExtra("order_status", 0);    //0代表订单确认
+                intent_toDetail.putExtra("total_price",total);
+                startActivity(intent_toDetail);}
+            }
+        });
+        addup_tv=(TextView) findViewById(R.id.shopcart_addup);
 
         addup_tv.setTextColor(Color.parseColor("#FFFFFF"));
         tittle_tv.setTextColor(Color.parseColor("#FFFFFF"));
         tittle_tv.setText(tittle);
-        double total=0;
-        for(int i=0;i<data.size();i++){
-            total=total+data.get(i).price*data.get(i).number;
-        }
-        DecimalFormat form=new DecimalFormat("0.00");
-        String price=form.format(total);
-        addup_tv.setText("合计：¥"+price);
+
+        addup_update(data);
 
         mToolbar.setTitle("");
 
         setSupportActionBar(mToolbar);
 //        getSupportActionBar().hide();
 
+    }
+
+    public static void addup_update(ArrayList<Content> data){
+        total=0;
+        for(int i=0;i<data.size();i++){
+            total=total+data.get(i).price*data.get(i).number;
+        }
+        DecimalFormat form=new DecimalFormat("0.00");
+        String price=form.format(total);
+        addup_tv.setText("合计：¥"+price);
     }
 
 }

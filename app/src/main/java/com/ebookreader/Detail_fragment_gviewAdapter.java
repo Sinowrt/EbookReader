@@ -113,33 +113,12 @@ public class Detail_fragment_gviewAdapter extends BaseAdapter {
             if (image_adapter.getFileType(curFile.getName()) != 0) {
                 //判断是否是图片或者是视屏
 
-                BitmapDrawable drawable = image_adapter.getBitmapFromMemoryCache(curFile.getAbsolutePath());//先查看缓存是否有
+                image_adapter.setDrawable(curFile.getAbsolutePath(),vh.list_file_imag);
 
-                if (drawable != null) {
-
-                    vh.list_file_imag.setImageDrawable(drawable);
-                } else if (image_adapter.cancelPotentialWork(curFile.getAbsolutePath(), vh.list_file_imag)) {//没有就异步缓存
-
-                    Image_Adapter.BitmapWorkerTask task = image_adapter.new BitmapWorkerTask(vh.list_file_imag);
-                    Image_Adapter.AsyncDrawable asyncDrawable = image_adapter.new AsyncDrawable(context.getResources(), mLoadingBitmap, task);
-                    vh.list_file_imag.setImageDrawable(asyncDrawable);
-                    task.execute(curFile.getAbsolutePath());
-                }
             }else{
                 if(curFile.isDirectory()) {
                     String coverUrl=findCoverimage(curFile);
-                    BitmapDrawable drawable = image_adapter.getBitmapFromMemoryCache(coverUrl);//先查看缓存是否有
-
-                    if (drawable != null) {
-
-                        vh.list_file_imag.setImageDrawable(drawable);
-                    } else if (image_adapter.cancelPotentialWork(curFile.getAbsolutePath(), vh.list_file_imag)) {//没有就异步缓存
-
-                        Image_Adapter.BitmapWorkerTask task = image_adapter.new BitmapWorkerTask(vh.list_file_imag);
-                        Image_Adapter.AsyncDrawable asyncDrawable = image_adapter.new AsyncDrawable(context.getResources(), mLoadingBitmap, task);
-                        vh.list_file_imag.setImageDrawable(asyncDrawable);
-                        task.execute(coverUrl);
-                    }
+                    image_adapter.setDrawable(coverUrl,vh.list_file_imag);
                 }
             }
         return convertView;}
@@ -169,19 +148,7 @@ public class Detail_fragment_gviewAdapter extends BaseAdapter {
                 vh.list_file_price.setTextColor(Color.RED);
                 String path=cursor.getString(2);
 
-
-                BitmapDrawable drawable = image_adapter.getBitmapFromMemoryCache(path);//先查看缓存是否有
-
-                if (drawable != null) {
-
-                    vh.list_file_imag.setImageDrawable(drawable);
-                } else if (image_adapter.cancelPotentialWork(path, vh.list_file_imag)) {//没有就异步缓存
-
-                    Image_Adapter.BitmapWorkerTask task = image_adapter.new BitmapWorkerTask(vh.list_file_imag);
-                    Image_Adapter.AsyncDrawable asyncDrawable = image_adapter.new AsyncDrawable(context.getResources(), mLoadingBitmap, task);
-                    vh.list_file_imag.setImageDrawable(asyncDrawable);
-                    task.execute(path);
-                }
+                image_adapter.setDrawable(path,vh.list_file_imag);
 
             }
 

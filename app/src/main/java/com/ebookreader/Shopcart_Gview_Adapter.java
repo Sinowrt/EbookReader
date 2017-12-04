@@ -2,9 +2,11 @@ package com.ebookreader;
 
 
         import java.text.DecimalFormat;
+        import java.util.ArrayList;
         import java.util.List;
-        import android.content.Context;
 
+        import android.content.ContentValues;
+        import android.content.Context;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +15,7 @@ package com.ebookreader;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.BaseAdapter;
+        import android.widget.Button;
         import android.widget.ImageView;
         import android.widget.TextView;
 
@@ -23,17 +26,19 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
     private Image_Adapter image_adapter;
     private LayoutInflater mInflater;
     private Context mContext;
-    private List<Shopcart_Activity.Content> mDatas;
+    private ArrayList<Shopcart_Activity.Content> mDatas;
     private Bitmap mLoadingBitmap;
+    private DBOpenHelper dbOpenHelper;
 
-    public Shopcart_Gview_Adapter(Context context, List<Shopcart_Activity.Content> mDatas)
+    public Shopcart_Gview_Adapter(Context context, ArrayList<Shopcart_Activity.Content> mDatas)
     {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mDatas = mDatas;
         image_adapter=new Image_Adapter(context);
         mLoadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_doc);
-        Log.d("Tag","000000"+mDatas.get(0).author);
+        dbOpenHelper=new DBOpenHelper(this.mContext);
+//        Log.d("Tag","000000"+mDatas.get(0).author);
     }
 
     @Override
@@ -55,7 +60,7 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         ViewHolder viewHolder = null;
         if (convertView == null)
@@ -69,6 +74,9 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
             viewHolder.author = (TextView) convertView.findViewById(R.id.author);
             viewHolder.price = (TextView) convertView.findViewById(R.id.scart_price);
             viewHolder.number = (TextView) convertView.findViewById(R.id.number);
+            viewHolder.item_increase=(Button) convertView.findViewById(R.id.item_increase);
+            viewHolder.item_decrease=(Button) convertView.findViewById(R.id.item_decrease);
+            viewHolder.item_delete=(Button) convertView.findViewById(R.id.item_delete);
 
             convertView.setTag(viewHolder);
         } else
@@ -86,25 +94,60 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
         DecimalFormat form=new DecimalFormat("0.00");
         String price=form.format(mDatas.get(position).price);
         viewHolder.price.setText("价格："+price);
-        viewHolder.number.setText("购买数量："+mDatas.get(position).number);
+        viewHolder.number.setText(""+mDatas.get(position).number);
+
+        viewHolder.item_increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int num=mDatas.get(position).number;
+                if(num<999){
+                    String where=mDatas.get(position).item_number;
+                    ContentValues values=new ContentValues();
+                    values.put("购买数量",++num);
+                    int i=dbOpenHelper.update("shopcart",values,"商品编号=?",new String[]{where});
+                    mDatas.get(position).number=num;
+                    Shopcart_Gview_Adapter.super.notifyDataSetChanged();
+
+                    Shopcart_Activity.addup_update(mDatas);
+                }
+            }
+        });
+
+        viewHolder.item_decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int num=mDatas.get(position).number;
+                if(num>0){
+                    String where=mDatas.get(position).item_number;
+                    ContentValues values=new ContentValues();
+                    values.put("购买数量",--num);
+                    dbOpenHelper.update("shopcart",values,"商品编号=?",new String[]{where});
+                    mDatas.get(position).number=num;
+                    Shopcart_Gview_Adapter.super.notifyDataSetChanged();
+                    Shopcart_Activity.addup_update(mDatas);
+
+
+                }
+            }
+        });
+
+        viewHolder.item_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String where=mDatas.get(position).item_number;
+                dbOpenHelper.delete("shopcart","商品编号=?",new String[]{where});
+                mDatas.remove(position);
+                Shopcart_Activity.addup_update(mDatas);
+                Shopcart_Gview_Adapter.super.notifyDataSetChanged();
+            }
+        });
 
         String image_path=mDatas.get(position).imagePath;
 
 
-        BitmapDrawable drawable = image_adapter.getBitmapFromMemoryCache(image_path);//先查看缓存是否有
-
-
-
-        if (drawable != null) {
-
-            viewHolder.imageView.setImageDrawable(drawable);
-        } else if (image_adapter.cancelPotentialWork(image_path, viewHolder.imageView)) {//没有就异步缓存
-
-            Image_Adapter.BitmapWorkerTask task = image_adapter.new BitmapWorkerTask(viewHolder.imageView);
-            Image_Adapter.AsyncDrawable asyncDrawable = image_adapter.new AsyncDrawable(mContext.getResources(), mLoadingBitmap, task);
-            viewHolder.imageView.setImageDrawable(asyncDrawable);
-            task.execute(image_path);
-        }
+        image_adapter.setDrawable(image_path,viewHolder.imageView);
 
 
         return convertView;
@@ -120,6 +163,9 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
         TextView author;
         TextView price;
         TextView number;
+        Button item_increase;
+        Button item_decrease;
+        Button item_delete;
     }
 
 }

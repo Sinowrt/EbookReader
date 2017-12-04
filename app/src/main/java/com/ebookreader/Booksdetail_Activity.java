@@ -38,8 +38,6 @@ public class Booksdetail_Activity extends AppCompatActivity {
 
         image_adapter=new Image_Adapter(this);
 
-        mLoadingBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.filetype_doc);
-
         accept_Intent();
         Initdb();
 
@@ -68,21 +66,10 @@ public class Booksdetail_Activity extends AppCompatActivity {
         price.setText("价格："+bookinfo.price);
         cover_path=bookinfo.coverpath;
 
-
-        BitmapDrawable drawable = image_adapter.getBitmapFromMemoryCache(cover_path);//先查看缓存是否有
-
+        image_adapter.setDrawable(cover_path,imageView);
 
 
-        if (drawable != null) {
 
-            imageView.setImageDrawable(drawable);
-        } else if (image_adapter.cancelPotentialWork(cover_path, imageView)) {//没有就异步缓存
-
-            Image_Adapter.BitmapWorkerTask task = image_adapter.new BitmapWorkerTask(imageView);
-            Image_Adapter.AsyncDrawable asyncDrawable = image_adapter.new AsyncDrawable(this.getResources(), mLoadingBitmap, task);
-            imageView.setImageDrawable(asyncDrawable);
-            task.execute(cover_path);
-        }
 
         addToshopcart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,13 +86,13 @@ public class Booksdetail_Activity extends AppCompatActivity {
                     cv.put("作者", bookinfo.author);
 
                     /////////////////////////////////////////////
-                    DatabaseContext dbContext = new DatabaseContext(Booksdetail_Activity.this);
-                    DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
+//                    DatabaseContext dbContext = new DatabaseContext(Booksdetail_Activity.this);
+                    DBOpenHelper dbHelper = new DBOpenHelper(Booksdetail_Activity.this);
 
                         dbHelper.insert("shopcart", null, cv);
 
                     //cursor=dbHelper.query("shopcart",new String[]{"商品编号","书名","价格","购买数量","封面路径","作者"},null,null,null,null,null,null);
-                    Toast.makeText(dbContext, bookinfo.buy_num+"本《"+bookinfo.bookname+"》已加入购物车", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Booksdetail_Activity.this, bookinfo.buy_num+"本《"+bookinfo.bookname+"》已加入购物车", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -138,8 +125,8 @@ public class Booksdetail_Activity extends AppCompatActivity {
 
     private void Initdb(){
         bookinfo=new bookInfo();
-        DatabaseContext dbContext = new DatabaseContext(this);
-        DBOpenHelper dbHelper = new DBOpenHelper(dbContext);
+//        DatabaseContext dbContext = new DatabaseContext(this);
+        DBOpenHelper dbHelper = new DBOpenHelper(this);
 
 
         cursor=dbHelper.query("books",new String[]{"书名","内容提要","价格","封面路径","作者"},"商品编号=?",new String[]{books_num},null,null,null,null);

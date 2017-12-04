@@ -73,8 +73,8 @@ public class DetailAct_Fragment extends Fragment {
     }
 
     private void Initdb(){
-        dbContext = new DatabaseContext(this.getContext());
-        dbHelper = new DBOpenHelper(dbContext);
+//        dbContext = new DatabaseContext(this.getContext());
+        dbHelper = new DBOpenHelper(this.getContext());
         String arg="type="+second_para;
 
         cursor=dbHelper.query("books",new String[]{"书名","价格","封面路径","商品编号"},arg,null,null,null,null,null);

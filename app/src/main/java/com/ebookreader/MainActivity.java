@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //if(login.check_Islogin())
         setContentView(R.layout.activity_main);
-
-        //else setContentView(R.layout.activity_login);
+        //else setContentView(R.order_confirm_fragment.activity_login);
         gview = (GridView) findViewById(R.id.gview);
         //新建List
         data_list = new ArrayList<Map<String, Object>>();
@@ -76,9 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     }
-
-
 
     public void intent_GoToDetailActivity(int pos) {
         Intent intent_toDetail = new Intent();

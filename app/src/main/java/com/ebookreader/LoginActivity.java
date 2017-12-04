@@ -325,22 +325,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                DBOpenHelper dbOpenHelper=new DBOpenHelper(LoginActivity.this);
+                Cursor cursor=dbOpenHelper.query("user_account",new String[]{"密码"},"囚号=?",new String[]{mEmail},null,null,null,null);
+                if(cursor.moveToFirst()){
+                    if(cursor.getString(0).equals(mPassword))
+                        cursor.close();
+                        return true;
+                }
+                cursor.close();
+                return false;
+//                Thread.sleep(2000);
+            } catch (Exception e) {
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
+
+
+            /*for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
-            }
+            }*/
 
             // TODO: register the new account here.
-            return true;
+            //return false;
         }
 
         @Override
@@ -349,6 +359,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                MyApplication myApplication=(MyApplication)LoginActivity.this.getApplication();
+                myApplication.setUserInfo(mEmail);
                 Intent intent_toDetail = new Intent();
                 intent_toDetail.setClass(LoginActivity.this,MainActivity.class);
                 startActivity(intent_toDetail);

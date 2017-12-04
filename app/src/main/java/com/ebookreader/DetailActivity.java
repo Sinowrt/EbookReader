@@ -4,6 +4,7 @@ package com.ebookreader;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -103,8 +104,44 @@ public class DetailActivity extends AppCompatActivity {
 
             init_toolbar(first_name);
 
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            /**
+             * 当抽屉滑动状态改变的时候被调用
+             * 状态值是STATE_IDLE（闲置--0）, STATE_DRAGGING（拖拽的--1）, STATE_SETTLING（固定--2）中之一。
+             * 抽屉打开的时候，点击抽屉，drawer的状态就会变成STATE_DRAGGING，然后变成STATE_IDLE
+             */
+            @Override
+            public void onDrawerStateChanged(int arg0) {
 
-            //匹配控件
+            }
+            /**
+             * 当抽屉被滑动的时候调用此方法
+             * arg1 表示 滑动的幅度（0-1）
+             */
+            @Override
+            public void onDrawerSlide(View arg0, float arg1) {
+
+            }
+            /**
+             * 当一个抽屉被完全打开的时候被调用
+             */
+            @Override
+            public void onDrawerOpened(View arg0) {
+                drawer_btn.setText("关闭分类");
+            }
+            /**
+             * 当一个抽屉完全关闭的时候调用此方法
+             */
+            @Override
+            public void onDrawerClosed(View arg0) {
+
+                drawer_btn.setText("展开分类");
+            }
+        });
+
+
+
+        //匹配控件
             expandableListView = (ExpandableListView) findViewById(R.id.expandablelistview);
             //传参
             adapter = new DetailAct_exlistview_Adapter(this, group_strs, child_str);
@@ -180,7 +217,7 @@ public class DetailActivity extends AppCompatActivity {
                     myFragment.setArguments(bundle);
                     fragmentTransaction.commit();
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
-                    drawer_btn.setText("展开分类");
+//                    drawer_btn.setText("展开分类");
                     return true;
                 }
                 else{
@@ -219,7 +256,7 @@ public class DetailActivity extends AppCompatActivity {
                 myFragment.setArguments(bundle);
                 fragmentTransaction.commit();
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                drawer_btn.setText("展开分类");
+//                drawer_btn.setText("展开分类");
                 return true;
             }
         });
@@ -273,13 +310,16 @@ public class DetailActivity extends AppCompatActivity {
                 boolean isDrawerOpen = mDrawerLayout.isDrawerOpen(Gravity.LEFT);
                 if(isDrawerOpen){
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
-                    drawer_btn.setText("展开分类");}
+//                    drawer_btn.setText("展开分类");
+                }
                 else{
                     mDrawerLayout.openDrawer(Gravity.LEFT);
-                    drawer_btn.setText("关闭分类");}
+//                    drawer_btn.setText("关闭分类");
+                }
             }
 
         });
+
 
         tv.setTextColor(Color.parseColor("#FFFFFF"));
         tv.setText(tittle);

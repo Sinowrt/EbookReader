@@ -15,11 +15,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author sinowrt
  * @date 2017-11-5 14:38:28
  */
+
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String DBNAME = "bookstoreInfo.db";
     private static final int VERSION = 11;
     public DBOpenHelper(Context context) {
-        super(context, DBNAME, null, VERSION);//it's location is data/data/pakage/database
+        super(new DatabaseContext(context), DBNAME, null, VERSION);//it's location is data/data/pakage/database
 
     }
 
@@ -66,10 +67,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param whereArgs  删除条件值数组
      * @return
      */
-    public int delete(String whereClause, String[] whereArgs) {
+    public int delete(String table,String whereClause, String[] whereArgs) {
 
         SQLiteDatabase wdb = getWritableDatabase();
-        return wdb.delete("books", whereClause, whereArgs);
+        return wdb.delete(table, whereClause, whereArgs);
     }
 
     /**

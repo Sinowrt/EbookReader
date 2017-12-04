@@ -36,11 +36,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="价格"/>
-        <TextView
-            android:id="@id/number"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="购买数量"/>
+            android:orientation="horizontal"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="购买数量:"/>
+            <Button
+                android:id="@+id/item_decrease"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="-"/>
+        <TextView
+                android:id="@id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <Button
+                android:id="@+id/item_increase"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="+"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/item_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除该商品"
+            android:textColor="#FF0000"
+            android:textSize="13dp"
+            android:layout_gravity="center_horizontal"/>
+
 
 
     </LinearLayout>
