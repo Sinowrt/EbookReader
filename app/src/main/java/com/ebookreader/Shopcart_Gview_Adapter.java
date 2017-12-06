@@ -27,7 +27,6 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
     private LayoutInflater mInflater;
     private Context mContext;
     private ArrayList<Shopcart_Activity.Content> mDatas;
-    private Bitmap mLoadingBitmap;
     private DBOpenHelper dbOpenHelper;
 
     public Shopcart_Gview_Adapter(Context context, ArrayList<Shopcart_Activity.Content> mDatas)
@@ -36,9 +35,7 @@ public class Shopcart_Gview_Adapter extends BaseAdapter
         this.mContext = context;
         this.mDatas = mDatas;
         image_adapter=new Image_Adapter(context);
-        mLoadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filetype_doc);
         dbOpenHelper=new DBOpenHelper(this.mContext);
-//        Log.d("Tag","000000"+mDatas.get(0).author);
     }
 
     @Override

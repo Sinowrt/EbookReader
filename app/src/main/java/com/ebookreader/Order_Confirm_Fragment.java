@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PaintDrawable;
-import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -17,17 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by Jacky on 2017/12/2.
@@ -111,8 +102,8 @@ public class Order_Confirm_Fragment extends Fragment{
 
 
 
-        mListView = (ListView) rootView.findViewById(R.id.order_detail_listview);
-        order_confirm_listviewAdapter adapter=new order_confirm_listviewAdapter(this.getContext(),mData);
+        mListView = (ListView) rootView.findViewById(R.id.order_confirm_listview);
+        order_listviewAdapter adapter=new order_listviewAdapter(this.getContext(),mData);
 
         mListView.setAdapter(adapter);
     }
@@ -184,16 +175,6 @@ public class Order_Confirm_Fragment extends Fragment{
             }
             cursor.close();
     }
-
-
-
-    class booksInfo{
-        String imagePath;
-        String bookname;
-        double price;
-        int booksnum;
-    }
-
 
 
 

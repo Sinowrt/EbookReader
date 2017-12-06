@@ -12,8 +12,9 @@ import android.view.View;
 import android.widget.TextView;
 
 public class order_detail_confirm extends AppCompatActivity {
-    int status;
-    double totalPrice;
+    private int status;
+    private double totalPrice;
+    private String orderNum;
     private Order_Confirm_Fragment myFragment;
 
     @Override
@@ -30,6 +31,7 @@ public class order_detail_confirm extends AppCompatActivity {
     }
 
     private void init_View(){
+        if (status==0){
         myFragment = new Order_Confirm_Fragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -37,7 +39,17 @@ public class order_detail_confirm extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putDouble("totalPrice",totalPrice);
         myFragment.setArguments(bundle);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();}
+        else{
+            Order_Detail_Fragment fragment = new Order_Detail_Fragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                    .beginTransaction();
+            fragmentTransaction.replace(R.id.order_fragment_container, fragment);
+            Bundle bundle = new Bundle();
+            bundle.putString("orderNum",orderNum);
+            fragment.setArguments(bundle);
+            fragmentTransaction.commit();
+        }
     }
 
     private void acceptIntent(){
@@ -45,6 +57,7 @@ public class order_detail_confirm extends AppCompatActivity {
         Bundle bundle = intent_accept.getExtras();
         status = bundle.getInt("order_status");
         if(status==0) totalPrice=bundle.getDouble("total_price");
+        else orderNum=bundle.getString("orderNum");
     }
 
     private void init_toolbar(){

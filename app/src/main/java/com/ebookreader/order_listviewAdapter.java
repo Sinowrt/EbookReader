@@ -10,19 +10,18 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Jacky on 2017/12/3.
  */
 
-class order_confirm_listviewAdapter extends BaseAdapter {
+class order_listviewAdapter extends BaseAdapter {
     private int[] colors = new int[] { 0xff626569, 0xff4f5257 };
     private Context mContext;
-    private ArrayList<Order_Confirm_Fragment.booksInfo> mData;
+    private ArrayList<booksInfo> mData;
     DecimalFormat form=new DecimalFormat("0.00");
 
-    public order_confirm_listviewAdapter(Context context,ArrayList<Order_Confirm_Fragment.booksInfo> Data) {
+    public order_listviewAdapter(Context context, ArrayList<booksInfo> Data) {
         mContext = context;
         mData=Data;
 
@@ -49,7 +48,7 @@ class order_confirm_listviewAdapter extends BaseAdapter {
         viewH vh = null;
         if (convertView == null) {
             vh = new viewH();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.order_confirm_listview_item, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.order_listview_item, parent, false);
             vh.bookimage= (ImageView) convertView.findViewById(R.id.order_confirm_bookImage);
             vh.bookname= (TextView) convertView.findViewById(R.id.order_confirm_bookname);
             vh.price=(TextView) convertView.findViewById(R.id.order_confirm_bookprice);

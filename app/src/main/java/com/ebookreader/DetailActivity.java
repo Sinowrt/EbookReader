@@ -205,6 +205,14 @@ public class DetailActivity extends AppCompatActivity {
 
 
                 if(child_str.get(groupPosition).size()==0){
+                    if(first_param==12&&groupPosition==3){
+                        parent.collapseGroup(pre_gPos);
+                        Shopping_History_Fragment fragment = new Shopping_History_Fragment();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, fragment);
+                        fragmentTransaction.commit();
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    }else{
                     parent.collapseGroup(pre_gPos);
                     myFragment = new DetailAct_Fragment();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -217,8 +225,7 @@ public class DetailActivity extends AppCompatActivity {
                     myFragment.setArguments(bundle);
                     fragmentTransaction.commit();
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
-//                    drawer_btn.setText("展开分类");
-                    return true;
+                    return true;}
                 }
                 else{
                     cPosition=0;

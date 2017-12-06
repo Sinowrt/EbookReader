@@ -118,7 +118,7 @@ public class Shopcart_Activity extends AppCompatActivity {
                 else{
                 Intent intent_toDetail = new Intent();
                 intent_toDetail.setClass(Shopcart_Activity.this,order_detail_confirm.class);
-                intent_toDetail.putExtra("order_status", 0);    //0代表订单确认
+                intent_toDetail.putExtra("order_status", 0);    //0代表订单确认 1表示订单详情
                 intent_toDetail.putExtra("total_price",total);
                 startActivity(intent_toDetail);}
             }
