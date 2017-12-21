@@ -65,7 +65,7 @@ public class AudioRecordManager {
     /**
      * 销毁线程方法
      */
-    private void destroyThread() {
+    public void destroyThread() {
         try {
             isStart = false;
             if (null != recordThread && Thread.State.RUNNABLE == recordThread.getState()) {

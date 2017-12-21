@@ -82,13 +82,22 @@ public class ReadingActivity extends AppCompatActivity {
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Recorder.mRecorder == null) init_date();
+                if(Recorder!=null) {
+                    if (!Recorder.isStart) {
+                        Recorder.destroyThread();
+                        init_date();
+                    }
+                }
+                else{
+                    init_date();
+                }
 
                 if (Recorder.isStart == true) {
                     Recorder.stopRecord();
                     recordBtn.setImageDrawable(getResources().getDrawable(R.drawable.record));
                 } else {
-                    if (player.isPlaying() == true) player.stop();
+                    if (player.isPlaying() == true)
+                        player.stop();
                     if (Recorder.isRecordplay == true) Recorder.stopPlay();
                     Recorder.startRecord(recordUrl);
                     recordBtn.setImageDrawable(getResources().getDrawable(R.drawable.stoprecord));
@@ -110,9 +119,15 @@ public class ReadingActivity extends AppCompatActivity {
         recplayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!Recorder.isRecordplay){
-                    if(player.isPlaying()) player.stop();
-                    Recorder.play(recordUrl);}
+                if(Recorder!=null) {
+                    if(Recorder.isStart){
+                        Recorder.stopRecord();
+                        recordBtn.setImageDrawable(getResources().getDrawable(R.drawable.record));}
+                    if (!Recorder.isRecordplay) {
+                        if (player.isPlaying()) player.stop();
+                        Recorder.play(recordUrl);
+                    }
+                }
             }
         });
 
@@ -127,6 +142,7 @@ public class ReadingActivity extends AppCompatActivity {
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(Recorder!=null&&Recorder.isStart==true) {Recorder.stopRecord();recordBtn.setImageDrawable(getResources().getDrawable(R.drawable.record));}
                 if(!player.isPlaying())
                     play();
 
@@ -138,6 +154,8 @@ public class ReadingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(player.isPlaying())
                 player.stop();
+                if(Recorder!=null&&Recorder.isRecordplay)
+                    Recorder.stopPlay();
 
             }
         });
@@ -171,7 +189,7 @@ public class ReadingActivity extends AppCompatActivity {
         try {
             Recorder = new AudioRecordManager();
 
-            Toast.makeText(ReadingActivity.this, recordUrl, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ReadingActivity.this, recordUrl, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(ReadingActivity.this, "init AudioRecordManager error！", Toast.LENGTH_SHORT).show();//提示异常
             finish();//直接关闭界面
