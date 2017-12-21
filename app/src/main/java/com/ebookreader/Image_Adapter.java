@@ -50,6 +50,8 @@ public class Image_Adapter {
             };}
     }
 
+
+
     public void setDrawable(String picPath,ImageView imageView){
         BitmapDrawable drawable = getBitmapFromMemoryCache(picPath);//先查看缓存是否有
 

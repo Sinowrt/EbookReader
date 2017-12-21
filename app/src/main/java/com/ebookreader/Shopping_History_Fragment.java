@@ -34,6 +34,7 @@ public class Shopping_History_Fragment extends Fragment {
 
     private ArrayList<OrderInfo> gviewData = new ArrayList<OrderInfo>();
     private ArrayList<String> imageData = new ArrayList<String>();
+    private ArrayList<String> bookNumber =new ArrayList<>();
     private GridView mGview = null;
     private ShoppingHistory_Gview_Adapter shoppingHistory_gview_adapter;
 
@@ -101,10 +102,11 @@ public class Shopping_History_Fragment extends Fragment {
                 Cursor cursorV = dbOpenHelper.query("books", new String[]{"封面路径"}, "商品编号=?", new String[]{cursorX.getString(0)},null,null,null,null);
                 cursorV.moveToFirst();
                 imageData.add(cursorV.getString(0));
+                bookNumber.add(cursorX.getString(0));
                 cursorV.close();
             }
             cursorX.close();
-            OrderInfo orderInfo = new OrderInfo(cursor.getString(0), cursor.getString(1),imageData,cursor.getString(2),cursor.getDouble(3));
+            OrderInfo orderInfo = new OrderInfo(cursor.getString(0), cursor.getString(1),imageData,bookNumber,cursor.getString(2),cursor.getDouble(3));
             gviewData.add(orderInfo);
         }
 
@@ -115,15 +117,17 @@ public class Shopping_History_Fragment extends Fragment {
             public String orderNum;
             public String orderStatus;
             public ArrayList<String> imageUrls;
+            public ArrayList<String> bookNumber;
             public String orderDate;
             public double orderPrice;
 
-            public OrderInfo(String orderNum, String orderStatus, ArrayList<String> imageUrls, String orderDate, double orderPrice) {
+            public OrderInfo(String orderNum, String orderStatus, ArrayList<String> imageUrls,ArrayList<String> bookNumber, String orderDate, double orderPrice) {
                 this.orderNum = orderNum;
                 this.orderStatus = orderStatus;
                 this.orderDate = orderDate;
                 this.orderPrice = orderPrice;
                 this.imageUrls = imageUrls;
+                this.bookNumber=bookNumber;
             }
         }
 
@@ -185,7 +189,10 @@ public class Shopping_History_Fragment extends Fragment {
                 viewHolder.orderItemGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(Shopping_History_Fragment.super.getContext(),"请点击单号查看订单详情",Toast.LENGTH_SHORT);
+                        Intent intent= new Intent(getActivity(),Booksdetail_Activity.class);
+                        intent.putExtra("books_number",bookNumber.get(position));
+                        startActivity(intent);
+//                        Toast.makeText(Shopping_History_Fragment.super.getActivity(),"请点击单号查看订单详情",Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -227,7 +234,7 @@ public class Shopping_History_Fragment extends Fragment {
 
             @Override
             public Object getItem(int position) {
-                return imageUrls.size();
+                return Math.min(imageUrls.size(),8);
             }
 
             @Override

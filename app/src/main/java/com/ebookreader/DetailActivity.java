@@ -151,14 +151,20 @@ public class DetailActivity extends AppCompatActivity {
 
         //创建MyFragment对象
 
+        FragmentTransaction fragmentTransaction;
+        if(first_param==12){
+            Account_detail Ad_fragment = new Account_detail();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, Ad_fragment);
+        }else{
             myFragment = new DetailAct_Fragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                    .beginTransaction();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, myFragment);
             //通过bundle传值给MyFragment
             Bundle bundle = new Bundle();
             bundle.putInt("first_type", first_param);    //传递来自一级目录的类目参数
             bundle.putInt("second_type", 0);   //传递来自二级目录listview参数
+
         /**
          *进入DetailActivity时默认打开二级目录0；
          * 判断二级目录下是否有三级目录；
@@ -177,7 +183,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
 
-            myFragment.setArguments(bundle);
+            myFragment.setArguments(bundle);}
 
             fragmentTransaction.commit();
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -205,6 +211,14 @@ public class DetailActivity extends AppCompatActivity {
 
 
                 if(child_str.get(groupPosition).size()==0){
+                    if(first_param==12&&groupPosition==0){
+                        parent.collapseGroup(pre_gPos);
+                        Account_detail Ad_fragment = new Account_detail();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, Ad_fragment);
+                        fragmentTransaction.commit();
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    }else
                     if(first_param==12&&groupPosition==3){
                         parent.collapseGroup(pre_gPos);
                         Shopping_History_Fragment fragment = new Shopping_History_Fragment();
@@ -239,7 +253,6 @@ public class DetailActivity extends AppCompatActivity {
                     bundle.putInt("third_path",0);
                     myFragment.setArguments(bundle);
                     fragmentTransaction.commit();
-
                 }
                 return false;
             }

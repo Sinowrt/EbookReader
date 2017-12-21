@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -62,6 +63,7 @@ public class Booksdetail_Activity extends AppCompatActivity {
 
         bookname.setText(bookinfo.bookname);
         summary.setText(bookinfo.content);
+        summary.setMovementMethod(new ScrollingMovementMethod());
         booksnum.setText("商品编号："+bookinfo.booknum);
         price.setText("价格："+bookinfo.price);
         cover_path=bookinfo.coverpath;

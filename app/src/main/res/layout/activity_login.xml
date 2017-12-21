@@ -59,7 +59,7 @@
                     android:id="@+id/email"
                     android:layout_width="700dp"
                     android:layout_height="wrap_content"
-                    android:hint="账号"
+                    android:hint="账号(测试账号为：22228888111)"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -74,7 +74,7 @@
                     android:id="@+id/password"
                     android:layout_width="700dp"
                     android:layout_height="wrap_content"
-                    android:hint="密码"
+                    android:hint="密码（测试账号密码为：123456）"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"

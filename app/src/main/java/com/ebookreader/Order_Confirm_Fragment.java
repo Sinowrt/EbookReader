@@ -94,7 +94,7 @@ public class Order_Confirm_Fragment extends Fragment{
         usrName.setText("收货人："+myApplication.getUser_name());
         usrNum.setText("囚号："+myApplication.getUser_number());
         usrPrisonBlock.setText("监区："+myApplication.getUser_PrisonBlock());
-        orderItemNum.setText("书目合计："+mData.size());
+        orderItemNum.setText("书目合计："+bookNumCount()+"本");
         DecimalFormat form=new DecimalFormat("0.00");
         String price=form.format(totalPrice);
         OrderTotalPrice.setText("应付款：¥"+price);
@@ -108,6 +108,13 @@ public class Order_Confirm_Fragment extends Fragment{
         mListView.setAdapter(adapter);
     }
 
+    private int bookNumCount(){
+        int num=0;
+        for(int i=0;i<mData.size();i++){
+            num=num+mData.get(i).booksnum;
+        }
+        return num;
+    }
     /**
      *      1、时间（15）+随机数（2），从全局Application获取用户信息，结合totalPrice，生成时间，插入orders表
      *

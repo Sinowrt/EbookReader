@@ -67,7 +67,7 @@ public class Order_Detail_Fragment extends Fragment {
         usrName.setText("收货人："+myApplication.getUser_name());
         usrNum.setText("囚号："+myApplication.getUser_number());
         usrPrisonBlock.setText("监区："+myApplication.getUser_PrisonBlock());
-        orderItemNum.setText("书目合计："+mData.size());
+        orderItemNum.setText("书目合计："+bookNumCount()+"本");
         orderNumber.setText("订单编号："+order_Num);
 
         DBOpenHelper dbOpenHelper=new DBOpenHelper(this.getContext());
@@ -88,6 +88,15 @@ public class Order_Detail_Fragment extends Fragment {
         order_listviewAdapter adapter=new order_listviewAdapter(this.getContext(),mData);
 
         mListView.setAdapter(adapter);
+    }
+
+
+    private int bookNumCount(){
+        int num=0;
+        for(int i=0;i<mData.size();i++){
+            num=num+mData.get(i).booksnum;
+        }
+        return num;
     }
 
     private void init_listData(){

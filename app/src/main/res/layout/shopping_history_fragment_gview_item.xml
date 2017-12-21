@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="400dp"
-    android:layout_height="100dp"
-    android:orientation="vertical"
+    android:layout_height="120dp"
+    android:background="@drawable/background"
     android:descendantFocusability="blocksDescendants"
     >
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="7dp">
     <LinearLayout
         android:layout_width="400dp"
         android:layout_height="wrap_content"
@@ -28,17 +33,24 @@
     </LinearLayout>
 
     <GridView
-        android:listSelector="@android:color/transparent"
+
         android:id="@+id/shopping_history_gview_order_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:columnWidth="400dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="8"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="20dp"
+        android:layout_marginTop="5dp"
         ></GridView>
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/shopping_history_order_date"
@@ -51,9 +63,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="18dp"/>
     </LinearLayout>
-
+</LinearLayout>
 
 
 </LinearLayout>
